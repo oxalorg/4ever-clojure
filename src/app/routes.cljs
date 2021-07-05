@@ -1,5 +1,6 @@
 (ns app.routes
   (:require [app.home :as home]
+            [app.problem :as problem]
             [reitit.frontend :as rf]
             [reitit.frontend.controllers :as rfc]
             [reitit.frontend.easy :as rfe]
@@ -13,7 +14,7 @@
    ["/problem" {:name :problem/list
                 :view home/view}]
    ["/problem/:id" {:name :problem/item
-                :view home/view}]])
+                    :view problem/view}]])
 
 (defn route-handler [new-match]
   (swap! match
