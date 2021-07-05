@@ -1,17 +1,22 @@
 (ns app.core
   (:require [reagent.core :as r]
+            [app.data :as data]
+            [app.routes :as routes]
             [reagent.dom :as rdom]))
 
-(js/alert "Hello world!")
+(defn main []
+  [:div
+   (if-let [match @routes/match]
+     (let [view (:view (:data match))]
+       [view match]))])
 
-(defn my-counter []
-  (let [counter (r/atom 0)]
-    (fn []
-      [:div
-       [:h2 "Hello this is a counter!"]
-       [:h3 @counter]
-       [:button {:on-click #(swap! counter inc)} "+"]
-       [:button {:on-click #(swap! counter dec)} "-"]])))
+(defn mount []
+  (rdom/render
+   [main]
+   (js/document.getElementById "app")))
 
-(rdom/render [my-counter]
-             (js/document.getElementById "my-root"))
+(defn init! []
+  (routes/init!)
+  (mount))
+
+(init!)
