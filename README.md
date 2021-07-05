@@ -12,6 +12,13 @@ Unfortunately 4clojure is shutting down: https://twitter.com/borkdude/status/141
 > somewhere that way. Perhaps with the option to download your solutions as an
 > archive.
 
-And so I made it, using the awesome [sci](https://github.com/borkdude/sci)
+And so I made it, using the awesome [sci](https://github.com/borkdude/sci) and special thanks to [4bb](https://github.com/porkostomus/4bb) from where I copied the problems edn.
 
-TRY IT OUT LIVE AT: [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
+## Live
+
+Deployed at [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
+
+## Todos
+
+- [x] Ship a crude version
+- [ ] Make it noice!
