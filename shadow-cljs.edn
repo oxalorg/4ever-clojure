@@ -5,4 +5,4 @@
  {:my-build {:target :browser
              :output-dir "public/js"
              :asset-path "/js"
-             :modules {:my-main {:entries [oxal.core]}}}}}
+             :modules {:my-main {:entries [app.core]}}}}}
