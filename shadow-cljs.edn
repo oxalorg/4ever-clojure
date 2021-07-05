@@ -1,0 +1,8 @@
+;; shadow-cljs configuration
+{:deps {:aliases [:dev]}
+ :dev-http {8000 "public"}
+ :builds
+ {:my-build {:target :browser
+             :output-dir "public/js"
+             :asset-path "/js"
+             :modules {:my-main {:entries [oxal.core]}}}}}
