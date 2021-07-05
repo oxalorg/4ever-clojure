@@ -22,3 +22,7 @@ Deployed at [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
 
 - [x] Ship a crude version
 - [ ] Make it noice!
+- [ ] use localstorage to store solutions
+- [ ] easy navigation
+- [ ] scrape problem difficulty (can perhaps also get ranks data?)
+- [ ] better alerts
