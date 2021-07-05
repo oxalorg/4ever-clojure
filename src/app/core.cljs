@@ -9,6 +9,8 @@
    [:h1 "4ever-clojure"]
    [:p
     [:small
+     [:a {:href "/"} "home"]
+     " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
      " | "
      "Built with ❤ by "
