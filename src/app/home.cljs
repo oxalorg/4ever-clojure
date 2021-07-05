@@ -12,7 +12,7 @@
   [:<>
    [:h3 "Latest problems"]
    [:ul
-    (for [problem (take 10 data/problems)]
+    (for [problem data/problems]
       (problem-list-item problem))]])
 
 (defn view []
