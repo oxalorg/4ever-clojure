@@ -25,4 +25,9 @@ Deployed at [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
 - [ ] use localstorage to store solutions
 - [ ] easy navigation
 - [ ] scrape problem difficulty (can perhaps also get ranks data?)
-- [ ] better alerts
+- [ ] better alerts (modals?)
+- [ ] show user which problems they have solved
+- [ ] import /export data of the user in a .edn file
+- [ ] github actions auto deployment
+- [ ] create a new section of problems "community powered questions"
+- [ ] add new community problems directly via github
