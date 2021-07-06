@@ -4,7 +4,6 @@
 
 (defn problem-list-item [{:keys [_id title]}]
   [:li
-   ^{:key _id}
    [:a {:href (state/href :problem/item {:id _id})}
     title]])
 
@@ -14,7 +13,8 @@
     [:small (str "(" (count data/problems) ")")]]
    [:ol
     (for [problem data/problems]
-      (problem-list-item problem))]])
+      ^{:key (:_id problem)}
+      [problem-list-item problem])]])
 
 (defn view []
   [:div
