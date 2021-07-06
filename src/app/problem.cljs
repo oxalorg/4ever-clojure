@@ -12,11 +12,15 @@
   (first
    (filter #(= (:_id %) id) data/problems)))
 
+(defn eval-string [s]
+  (sci/eval-string s {:classes {'js goog/global
+                                :allow :all}}))
+
 (defn check-solution [id user-solution]
   (try
     (let [problem (get-problem id)
           replaced   (mapv #(str/replace % "__" user-solution) (:tests problem))
-          results (map sci/eval-string replaced)
+          results (map eval-string replaced)
           passed (count (filter true? results))
           failed (count (filter false? results))]
       (js/alert (str "Passed: " passed " / Failed: " failed)))
