@@ -44,7 +44,6 @@
             [:code test]]])]
        [:p "Write code which will fill in the above blanks:"]
        [input-block]
-       [:p @user-solution]
        [:button {:disabled (-> @user-solution
                                str/trim
                                str/blank?)
