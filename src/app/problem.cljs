@@ -42,7 +42,8 @@
        [:h3 "Problem " id]
        [:p (:description problem)]
        [:ul
-        (for [test (:tests problem)]
+        (for [[i test] (map vector (range) (:tests problem))]
+          ^{:key i}
           [:li
            [:pre
             [:code test]]])]
