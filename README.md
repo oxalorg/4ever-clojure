@@ -18,6 +18,21 @@ And so I made it, using the awesome [sci](https://github.com/borkdude/sci) and s
 
 Deployed at [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
 
+## Develop
+
+This project uses shadow-cljs, so the easiest way to use this would be:
+
+```
+npm install # only needed once
+npx shadow-cljs watch :my-build
+```
+
+If you are a fan of emacs and cider, then you can open up emacs and run
+`cider-jack-in-cljs`. It will automatically start shadow-cljs in watch
+mode.
+
+shadow hosts the dev server at http://localhost:8000
+
 ## Todos
 
 - [x] Ship a crude version
