@@ -64,7 +64,6 @@
                         (let [problem (z/sexpr loc)
                               {:keys [difficulty tags]} (get data2 (:_id problem) {})]
                           (recur (-> loc
-                                     (z/remo)
                                      (z/append-child (node/newlines 1))
                                      (z/append-child (node/spaces 4))
                                      (z/append-child :difficulty)
