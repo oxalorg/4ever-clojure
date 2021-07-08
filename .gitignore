@@ -3,3 +3,4 @@
 /.cpcache
 /node_modules
 /.nrepl-port
+/.store/

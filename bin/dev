@@ -1,0 +1,87 @@
+#!bin/bb
+
+(require '[clojure.string :as str]
+         '[clojure.java.io :as io]
+         '[clojure.core :as c]
+         '[clojure.pprint]
+         '[clojure.java.shell :as sh]
+         '[cheshire.core :as json]
+         '[babashka.fs :as fs])
+
+;; Helpers
+(defn process-builder [args]
+  (doto (ProcessBuilder. args)
+    (.redirectInput java.lang.ProcessBuilder$Redirect/INHERIT)
+    (.redirectError java.lang.ProcessBuilder$Redirect/INHERIT)
+    (.redirectOutput java.lang.ProcessBuilder$Redirect/INHERIT)))
+
+(defn cmd->str [args]
+  (str/join " " (map #(if (str/includes? % " ") (pr-str %) %) args)))
+
+(defn sh [& args]
+  (let [[opts args] (if (map? (last args))
+                      [(last args) (butlast args)]
+                      [{} args])
+        dir (:dir opts)]
+    (println "=>" (cmd->str args) (if dir (str "(in ./" dir ")") ""))
+    (-> (process-builder args)
+        (cond-> dir
+          (.directory (io/file dir)))
+        .start
+        .waitFor)))
+
+(defn print-help [prefix commands]
+  (println "usage:" prefix "[command] [command_args...]")
+  (println)
+  (doseq [[cmd {:keys [description]}] commands]
+    (println (format "  %-17s%s" cmd description))))
+
+(defn cli-run!
+  [args commands]
+  (if-let [{:keys [command]} (get commands (first args))]
+    (command (next args))
+    ((-> commands
+         (get "help")
+         :command) nil)))
+
+;; Commands
+(defmacro with-module-hashed-index
+  "Evaluates body with index file changed to reflect hashed module paths.
+  Reverts index back to original after body execution is completed.
+
+  Currently only supports single hardcoded module. Only needed for prod build.
+  Make sure :module-hash-names is true in shadow-cljs.edn"
+  [& body]
+  `(let [original-index (slurp "./public/index.html")
+         hashed-file-name (some->> "./public/js/manifest.edn"
+                                   slurp
+                                   read-string
+                                   (filter #(= (:module-id %) :my-main))
+                                   first
+                                   :output-name)
+         hashed-index (str/replace original-index
+                                   #"my-main.js"
+                                   hashed-file-name)]
+     (spit "./public/index.html" hashed-index)
+     (do ~@body)
+     (sh "rm" (str "./public/js/" hashed-file-name))
+     (spit "./public/index.html" original-index)))
+
+(def commands
+  (sorted-map
+   "deploy"
+   {:description "shadow production build & deploy"
+    :command (fn [_]
+               (sh "npx" "shadow-cljs" "release" ":my-build")
+               (with-module-hashed-index
+                 (sh "rsync" "-a" "public/" "ark:/srv/ox/4clojure" "-v")))}
+   "help"
+   {:description "show this help information"
+    :command (fn [_] (print-help "bin/dev" commands))}))
+
+
+(cli-run! *command-line-args* commands)
+
+;; local variables:
+;; mode:clojure
+;; end:

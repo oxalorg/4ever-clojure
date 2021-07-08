@@ -1,7 +1,4 @@
-.PHONY=release deploy
+.PHONY=deploy
 
-release:
-	npx shadow-cljs release :my-build
-
-deploy: release
-	rsync -a public/ ark:/srv/ox/4clojure
+deploy: 
+	bin/dev deploy
