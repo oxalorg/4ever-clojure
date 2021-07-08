@@ -1,0 +1,90 @@
+(require '[clojure.string :as str]
+         '[clojure.java.io :as io]
+         '[clojure.core :as c]
+         '[clojure.pprint]
+         '[rewrite-clj.zip :as z]
+         '[rewrite-clj.node :as node]
+         '[clojure.java.shell :as sh]
+         '[cheshire.core :as json]
+         '[babashka.fs :as fs])
+
+(defn csv-data->maps [csv-data]
+  (map zipmap
+       (->> (first csv-data) ;; First row is the header
+            (map keyword) ;; Drop if you want string keys instead
+            repeat)
+       (rest csv-data)))
+
+(def data
+  ;; thanks @humorless for list.csv
+  (with-open [reader (io/reader (io/file "list.csv"))]
+    (doall
+     (->
+      (csv/read-csv reader)
+      csv-data->maps))))
+
+(def data2
+  (into {}
+        (comp
+         (map #(assoc % :id (-> %
+                                :url
+                                (str/replace "https://www.4clojure.com/problem/" "")
+                                Integer/parseInt)))
+         (map #(dissoc % :url))
+         (map #(update % :tags (fn [tag-str]
+                                 (if (= tag-str "")
+                                   []
+                                   (str/split (str/lower-case tag-str) #" ")))))
+         (map #(hash-map (:id %) %)))
+        data))
+
+(def zloc (z/of-file (io/file "src/app/data.cljc")))
+
+#_(def new-data
+    (-> (z/find-value zloc z/next 'problems)
+        z/right
+        (z/edit (fn [problems]
+                  (into []
+                        (comp
+                         (map #(merge % (get data2 (:_id %))))
+                         (map #(dissoc % :id)))
+                        problems)))
+        z/root))
+
+(def problem-loc (-> (z/find-value zloc z/next 'problems)
+                     z/right
+                     z/down))
+
+(def out
+  (let [rewrite-loc (loop [loc problem-loc
+                           previous-loc problem-loc]
+                      (cond
+                        (nil? loc) previous-loc
+                        :else
+                        (let [problem (z/sexpr loc)
+                              {:keys [difficulty tags]} (get data2 (:_id problem) {})]
+                          (recur (-> loc
+                                     (z/remo)
+                                     (z/append-child (node/newlines 1))
+                                     (z/append-child (node/spaces 4))
+                                     (z/append-child :difficulty)
+                                     (z/append-child (if difficulty
+                                                       (str/lower-case difficulty)
+                                                       ""))
+                                     (z/append-child (node/newlines 1))
+                                     (z/append-child (node/spaces 4))
+                                     ;; FIXME: need to update existing tag node
+                                     ;; not add a new one
+                                     (z/append-child :tags)
+                                     (z/append-child tags)
+                                     z/right)
+                                 loc))))]
+    (-> rewrite-loc
+        z/root)))
+
+(comment
+  (spit "src/app/data.cljc" out :encoding "UTF-8"))
+
+;; local variables:
+;; mode:clojure
+;; end:
