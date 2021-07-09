@@ -25,7 +25,7 @@
      (let [view (:view (:data match))]
        [view match]))])
 
-(defn mount []
+(defn ^:dev/after-load mount []
   (rdom/render
    [main]
    (js/document.getElementById "app")))
