@@ -1,6 +1,7 @@
 (ns app.problem
   (:require [app.data :as data]
             [app.state :as state]
+            [app.localstorage :as localstorage]
             [clojure.string :as str]
             [goog.object :as gobj]
             [reagent.core :as r]
@@ -27,17 +28,26 @@
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn input-block []
+(defn input-block-handler [problem-id user-solution-atom e]
+  (let [solution (-> e .-target .-value)]
+    (reset! user-solution-atom solution)
+    (localstorage/set-item! problem-id solution)))
+
+(defn input-block [id]
   [:pre
    [:textarea {:name "user-solution"
                :value @user-solution
-               :on-change #(reset! user-solution (-> % .-target .-value))
+               :on-change (partial input-block-handler id user-solution)
                :rows 8}]])
 
 (defn view [{:keys [path-params] :as props}]
   (fn [{:keys [path-params] :as props}]
     (let [id (js/parseInt (:id path-params))
-          problem (get-problem id)]
+          problem (get-problem id)
+          solution (localstorage/get-item id)]
+      (if (some? solution)
+        (reset! user-solution solution)
+        (reset! user-solution ""))
       [:div
        [:h3 "Problem " id]
        [:p (:description problem)]
@@ -48,9 +58,8 @@
            [:pre
             [:code test]]])]
        [:p "Write code which will fill in the above blanks:"]
-       [input-block]
+       [input-block id]
        [:button {:disabled (-> @user-solution
                                str/trim
                                str/blank?)
-                 :on-click #(check-solution id @user-solution)} "Run"]
-       ])))
+                 :on-click #(check-solution id @user-solution)} "Run"]])))
