@@ -37,7 +37,7 @@ shadow hosts the dev server at http://localhost:8000
 
 - [x] Ship a crude version
 - [ ] Make it noice!
-- [ ] use localstorage to store solutions
+- [x] use localstorage to store solutions
 - [ ] easy navigation
 - [ ] scrape problem difficulty (can perhaps also get ranks data?)
 - [ ] better alerts (modals?)
