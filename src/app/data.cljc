@@ -5,24 +5,32 @@
     :title       "Nothing but the Truth"
     :tests       ["(= __ true)"]
     :description "Complete the expression so
-it will evaluate to true."}
+it will evaluate to true." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         2
     :title       "Simple Math"
     :tests       ["(= (- 10 (* 2 3)) __)"]
-    :description "Innermost forms are evaluated first."}
+    :description "Innermost forms are evaluated first." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         3
     :title       "Strings"
     :tests       ["(= __ (.toUpperCase \"hello world\"))"]
     :description "Clojure strings are Java strings,
-so you can use Java string methods on them."}
+so you can use Java string methods on them." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         4
     :title       "Lists"
     :tests       ["(= (list __) '(:a :b :c))"]
     :description "Lists can be constructed with either
-a function or a quoted form."}
+a function or a quoted form." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         5
     :title       "conj on lists"
@@ -30,12 +38,16 @@ a function or a quoted form."}
                   "(= __ (conj '(3 4) 2 1))"]
     :description "When operating on a list,
 the conj function will return a new list
-with one or more items \"added\" to the front."}
+with one or more items \"added\" to the front." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id 6 :title "Vectors"
     :tests ["(= [__] (list :a :b :c) (vec '(:a :b :c)) (vector :a :b :c))"]
     :description "Vectors can be constructed several ways.
-You can compare them with lists."}
+You can compare them with lists." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         7
     :title       "conj on vectors"
@@ -43,31 +55,41 @@ You can compare them with lists."}
                   "(= __ (conj [1 2] 3 4))"]
     :description "When operating on a Vector,
 the conj function will return a new vector
-with one or more items \"added\" to the end."}
+with one or more items \"added\" to the end." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         8
     :title       "Sets"
     :tests       ["(= __ (set '(:a :a :b :c :c :c :c :d :d)))"
                   "(= __ (clojure.set/union #{:a :b :c} #{:b :c :d}))"]
-    :description "Sets are collections of unique values."}
+    :description "Sets are collections of unique values." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id 9 :title "conj on sets"
     :tests ["(= #{1 2 3 4} (conj #{1 4 3} __))"]
     :description "When operating on a set,
-the conj function returns a new set with one or more keys \"added\"."}
+the conj function returns a new set with one or more keys \"added\"." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id 10 :title "Maps"
     :tests ["(= __ ((hash-map :a 10, :b 20, :c 30) :b))"
             "(= __ (:b {:a 10, :b 20, :c 30}))"]
     :description "Maps store key-value pairs.
 Both maps and keywords can be used as lookup functions.
-Commas are whitespace."}
+Commas are whitespace." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id 11 :title "conj on maps"
     :tests ["(= {:a 1, :b 2, :c 3} (conj {:a 1} __ [:c 3]))"]
     :description "When operating on a map,
 the conj function returns a new map
-with one or more key-value pairs \"added\"."}
+with one or more key-value pairs \"added\"." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         12
     :title       "Sequences"
@@ -76,13 +98,17 @@ with one or more key-value pairs \"added\"."}
                   "(= __ (last (list 1 2 3)))"]
     :description "All Clojure collections support sequencing.
 You can operate on sequences with functions
-like first, second, and last."}
+like first, second, and last." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         13
     :title       "rest"
     :tests       ["(= __ (rest [10 20 30 40]))"]
     :description "The rest function will return all the items
-of a sequence except the first."}
+of a sequence except the first." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         14
     :title       "Functions"
@@ -90,7 +116,9 @@ of a sequence except the first."}
                   "(= __ ((fn [x] (+ x 5)) 3))"
                   "(= __ (#(+ % 5) 3))"
                   "(= __ ((partial + 5) 3))"]
-    :description "Clojure has many different ways to create functions."}
+    :description "Clojure has many different ways to create functions." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         15
     :title       "Double Down"
@@ -98,14 +126,18 @@ of a sequence except the first."}
                   "(= (__ 3) 6)"
                   "(= (__ 11) 22)"
                   "(= (__ 7) 14)"]
-    :description "Write a function which doubles a number."}
+    :description "Write a function which doubles a number." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         16
     :title       "Hello World"
     :tests       ["(= (__ \"Dave\") \"Hello, Dave!\")"
                   "(= (__ \"Jenn\") \"Hello, Jenn!\")"
                   "(= (__ \"Rhea\") \"Hello, Rhea!\")"]
-    :description "Write a function which returns a personalized greeting."}
+    :description "Write a function which returns a personalized greeting." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         17
     :title       "map"
@@ -114,7 +146,9 @@ of a sequence except the first."}
 a function (f) and a sequence (s).
 Map returns a new sequence consisting of
 the result of applying f to each item of s.
-Do not confuse the map function with the map data structure."}
+Do not confuse the map function with the map data structure." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         18
     :title       "filter"
@@ -122,7 +156,9 @@ Do not confuse the map function with the map data structure."}
     :description "The filter function takes two arguments:
 a predicate function (f) and a sequence (s).
 Filter returns a new sequence consisting
-of all the items of s for which (f item) returns true."}
+of all the items of s for which (f item) returns true." 
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         19
     :restricted  ["last"]
@@ -131,7 +167,9 @@ of all the items of s for which (f item) returns true."}
                   "(= (__ '(5 4 3)) 3)"
                   "(= (__ [\"b\" \"c\" \"d\"]) \"d\")"]
     :description "Write a function which returns
-the last element in a sequence."}
+the last element in a sequence." 
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         20
     :title       "Penultimate Element"
@@ -139,7 +177,9 @@ the last element in a sequence."}
                   "(= (__ [\"a\" \"b\" \"c\"]) \"b\")"
                   "(= (__ [[1 2] [3 4]]) [1 2])"]
     :description "Write a function which returns
-the second to last element from a sequence."}
+the second to last element from a sequence." 
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         21
     :restricted  ["nth"]
@@ -149,7 +189,9 @@ the second to last element from a sequence."}
                   "(= (__ [1 2 3 4] 1) 2)"
                   "(= (__ '([1 2] [3 4] [5 6]) 2) [5 6])"]
     :description "Write a function which returns
-the Nth element from a sequence."}
+the Nth element from a sequence." 
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         22
     :restricted  ["count"]
@@ -161,7 +203,8 @@ the Nth element from a sequence."}
                   "(= (__ '(:a :b :c)) 3)"]
     :description "Write a function which returns
 the total number of elements in a sequence."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         23
     :restricted  ["reverse"]
@@ -170,7 +213,8 @@ the total number of elements in a sequence."
                   "(= (__ (sorted-set 5 7 2 7)) '(7 5 2))"
                   "(= (__ [[1 2][3 4][5 6]]) [[5 6][3 4][1 2]])"]
     :description "Write a function which reverses a sequence."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         24
     :title       "Sum It All Up"
@@ -181,7 +225,8 @@ the total number of elements in a sequence."
                   "(= (__ '(1 10 3)) 14)"]
     :description "Write a function which returns
 the sum of a sequence of numbers."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         25
     :title       "Find the odd numbers"
@@ -191,7 +236,8 @@ the sum of a sequence of numbers."
                   "(= (__ [1 1 1 3]) '(1 1 1 3))"]
     :description "Write a function which returns
 only the odd numbers from a sequence."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         26
     :title       "Fibonacci Sequence"
@@ -200,7 +246,8 @@ only the odd numbers from a sequence."
                   "(= (__ 8) '(1 1 2 3 5 8 13 21))"]
     :description "Write a function which returns
 the first X fibonacci numbers."
-    :tags        ["easy" "Fibonacci" "seqs"]}
+    :difficulty "easy" 
+    :tags ["fibonacci" "seqs"]}
 
    {:_id         27
     :title       "Palindrome Detector"
@@ -213,7 +260,8 @@ the first X fibonacci numbers."
 if the given sequence is a palindrome.
 
 Hint: \"racecar\" does not equal '(\\r \\a \\c \\e \\c \\a \\r)"
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         28
     :restricted  ["flatten"]
@@ -222,7 +270,8 @@ Hint: \"racecar\" does not equal '(\\r \\a \\c \\e \\c \\a \\r)"
                   "(= (__ [\"a\" [\"b\"] \"c\"]) '(\"a\" \"b\" \"c\"))"
                   "(= (__ '((((:a))))) '(:a))"]
     :description "Write a function which flattens a sequence."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         29
     :title       "Get the Caps"
@@ -231,7 +280,8 @@ Hint: \"racecar\" does not equal '(\\r \\a \\c \\e \\c \\a \\r)"
                   "(= (__ \"$#A(*&987Zf\") \"AZ\")"]
     :description "Write a function which takes a string
 and returns a new string containing only the capital letters."
-    :tags        ["easy" "strings"]}
+    :difficulty "easy" 
+    :tags ["strings"]}
 
    {:_id         30
     :title       "Compress a Sequence"
@@ -240,7 +290,8 @@ and returns a new string containing only the capital letters."
                   "(= (__ [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))"]
     :description "Write a function which removes
 consecutive duplicates from a sequence."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         31
     :title       "Pack a Sequence"
@@ -249,7 +300,8 @@ consecutive duplicates from a sequence."
                   "(= (__ [[1 2] [1 2] [3 4]]) '(([1 2] [1 2]) ([3 4])))"]
     :description "Write a function which
 packs consecutive duplicates into sub-lists."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         32
     :title       "Duplicate a Sequence"
@@ -259,7 +311,8 @@ packs consecutive duplicates into sub-lists."
                   "(= (__ [44 33]) [44 44 33 33])"]
     :description "Write a function which
 duplicates each element of a sequence."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         33
     :title       "Replicate a Sequence"
@@ -270,7 +323,8 @@ duplicates each element of a sequence."
                   "(= (__ [44 33] 2) [44 44 33 33])"]
     :description "Write a function which replicates each
 element of a sequence a variable number of times."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         34
     :restricted  ["range"]
@@ -280,7 +334,8 @@ element of a sequence a variable number of times."
                   "(= (__ 5 8) '(5 6 7))"]
     :description "Write a function which creates a list
 of all integers in a given range."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         35
     :title       "Local bindings"
@@ -289,7 +344,8 @@ of all integers in a given range."
                   "(= __ (let [x 21] (let [y 3] (/ x y))))"]
     :description "Clojure lets you give local names
 to values using the special let-form."
-    :tags        ["elementary" "syntax"]}
+    :difficulty "elementary" 
+    :tags ["syntax"]}
 
    {:_id         36
     :title       "Let it Be"
@@ -297,13 +353,15 @@ to values using the special let-form."
                   "(= 4 (let __ (+ y z)))"
                   "(= 1 (let __ z))"]
     :description "Can you bind x, y, and z so that these are all true?"
-    :tags        ["elementary" "math" "syntax"]}
+    :difficulty "elementary" 
+    :tags ["math" "syntax"]}
 
    {:_id         37
     :title       "Regular Expressions"
     :tests       ["(= __ (apply str (re-seq #\"[A-Z]+\" \"bA1B3Ce \")))"]
     :description "Regex patterns are supported with a special reader macro."
-    :tags        ["elementary" "regex" "syntax"]}
+    :difficulty "elementary" 
+    :tags ["regex" "syntax"]}
 
    {:_id         38
     :restricted  ["max" "max-key"]
@@ -312,7 +370,8 @@ to values using the special let-form."
                   "(= (__ 30 20) 30)" "(= (__ 45 67 11) 67)"]
     :description "Write a function which takes a variable number
 of parameters and returns the maximum value."
-    :tags        ["easy" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["core-functions"]}
 
    {:_id         39
     :restricted  ["interleave"]
@@ -324,7 +383,8 @@ of parameters and returns the maximum value."
     :description "Write a function which takes two sequences
 and returns the first item from each,
 then the second item from each, then the third, etc."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         40
     :restricted  ["interpose"]
@@ -334,7 +394,8 @@ then the second item from each, then the third, etc."
                   "(= (__ :z [:a :b :c :d]) [:a :z :b :z :c :z :d])"]
     :description "Write a function which separates
 the items of a sequence by an arbitrary value."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         41
     :title       "Drop Every Nth Item"
@@ -343,7 +404,8 @@ the items of a sequence by an arbitrary value."
                   "(= (__ [1 2 3 4 5 6] 4) [1 2 3 5 6])"]
     :description "Write a function which
 drops every Nth item from a sequence."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         42
     :title       "Factorial Fun"
@@ -352,7 +414,8 @@ drops every Nth item from a sequence."
                   "(= (__ 5) 120)"
                   "(= (__ 8) 40320)"]
     :description "Write a function which calculates factorials."
-    :tags        ["easy" "math"]}
+    :difficulty "easy" 
+    :tags ["math"]}
 
    {:_id         43
     :title       "Reverse Interleave"
@@ -361,7 +424,8 @@ drops every Nth item from a sequence."
                   "(= (__ (range 10) 5) '((0 5) (1 6) (2 7) (3 8) (4 9)))"]
     :description "Write a function which reverses the
 interleave process into x number of subsequences."
-    :tags        ["medium" "seqs"]}
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id         44
     :title       "Rotate Sequence"
@@ -372,14 +436,16 @@ interleave process into x number of subsequences."
                   "(= (__ -4 '(:a :b :c)) '(:c :a :b))"]
     :description "Write a function which
 can rotate a sequence in either direction."
-    :tags        ["medium" "seqs"]}
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id         45
     :title       "Intro to Iterate"
     :tests       ["(= __ (take 5 (iterate #(+ 3 %) 1)))"]
     :description "The iterate function can be used to produce
 an infinite lazy sequence."
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         46
     :title       "Flipping out"
@@ -389,7 +455,8 @@ an infinite lazy sequence."
                   "(= [1 2 3] ((__ take) [1 2 3 4 5] 3))"]
     :description "Write a higher-order function which
 flips the order of the arguments of an input function."
-    :tags        ["medium" "higher-order-functions"]}
+    :difficulty "medium" 
+    :tags ["higher-order-functions"]}
 
    {:_id         47
     :title       "Contain Yourself"
@@ -401,7 +468,8 @@ flips the order of the arguments of an input function."
 is present in a given collection.
 This often leads beginner clojurians to use it incorrectly
 with numerically indexed collections like vectors and lists."
-    :tags        ["easy"]}
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         48
     :title       "Intro to some"
@@ -411,7 +479,8 @@ with numerically indexed collections like vectors and lists."
 a predicate function and a collection.
 It returns the first logical true value of (predicate x)
 where x is an item in the collection."
-    :tags        ["easy"]}
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         49
     :restricted  ["split-at"]
@@ -421,7 +490,8 @@ where x is an item in the collection."
                   "(= (__ 2 [[1 2] [3 4] [5 6]]) [[[1 2] [3 4]] [[5 6]]])"]
     :description "Write a function which will
 split a sequence into two parts."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         50
     :title       "Split by Type"
@@ -434,21 +504,24 @@ and splits them up into a set of homogeneous sub-sequences.
 The internal order of each sub-sequence should be maintained,
 but the sub-sequences themselves can be returned in any order
 (this is why 'set' is used in the test cases)."
-    :tags        ["medium" "seqs"]}
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id         51
     :title       "Advanced Destructuring"
     :tests       ["(= [1 2 [3 4 5] [1 2 3 4 5]] (let [[a b & c :as d] __] [a b c d]))"]
     :description "Here is an example of some
 more sophisticated destructuring."
-    :tags        ["easy" "destructuring"]}
+    :difficulty "easy" 
+    :tags ["destructuring"]}
 
    {:_id         52
     :title       "Intro to Destructuring"
     :tests       ["(= [2 4] (let [[a b c d e f g] (range)] __))"]
     :description "Let bindings and function parameter lists
 support destructuring."
-    :tags        ["easy" "destructuring"]}
+    :difficulty "elementary" 
+    :tags ["destructuring"]}
 
    {:_id         53
     :title       "Longest Increasing Sub-Seq"
@@ -462,7 +535,8 @@ If two sub-sequences have the same length,
 use the one that occurs first.
 An increasing sub-sequence must have
 a length of 2 or greater to qualify."
-    :tags        ["hard" "seqs"]}
+    :difficulty "hard" 
+    :tags ["seqs"]}
 
    {:_id         54
     :restricted  ["partition" "partition-all"]
@@ -473,7 +547,8 @@ a length of 2 or greater to qualify."
     :description "Write a function which returns
 a sequence of lists of x items each.
 Lists of less than x items should not be returned."
-    :tags        ["medium" "seqs" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         55
     :restricted  ["frequencies"]
@@ -484,7 +559,8 @@ Lists of less than x items should not be returned."
     :description "Write a function which returns a map
 containing the number of occurences
 of each distinct item in a sequence."
-    :tags        ["medium" "seqs" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         56
     :restricted  ["distinct"]
@@ -496,7 +572,8 @@ of each distinct item in a sequence."
     :description "Write a function which
 removes the duplicates from a sequence.
 Order of the items must be maintained."
-    :tags        ["medium" "seqs" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         57
     :title       "Simple Recursion"
@@ -504,7 +581,8 @@ Order of the items must be maintained."
     :description "A recursive function is a function which calls itself.
 This is one of the fundamental techniques
 used in functional programming."
-    :tags        ["elementary" "recursion"]}
+    :difficulty "elementary" 
+    :tags ["recursion"]}
 
    {:_id         58
     :restricted  ["comp"]
@@ -517,7 +595,8 @@ used in functional programming."
 allows you to create function compositions.
 The parameter list should take a variable number of functions,
 and create a function applies them from right-to-left."
-    :tags        ["medium" "higher-order-functions" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["higher-order-functions" "core-functions"]}
 
    {:_id         59
     :restricted  ["juxt"]
@@ -529,7 +608,8 @@ and create a function applies them from right-to-left."
 that takes a variable number of arguments and returns a sequence
 containing the result of applying each function
 left-to-right to the argument list."
-    :tags        ["medium" "higher-order-functions" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["higher-order-functions" "core-functions"]}
 
    {:_id         60
     :restricted  ["reductions"]
@@ -541,7 +621,8 @@ left-to-right to the argument list."
 but returns each intermediate value of the reduction.
 Your function must accept either two or three arguments,
 and the return sequence must be lazy."
-    :tags        ["medium" "seqs" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         61
     :restricted  ["zipmap"]
@@ -551,7 +632,8 @@ and the return sequence must be lazy."
                   "(= (__ [:foo :bar] [\"foo\" \"bar\" \"baz\"]) {:foo \"foo\", :bar \"bar\"})"]
     :description "Write a function which takes a vector of keys
 and a vector of values and constructs a map from them."
-    :tags        ["easy" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["core-functions"]}
 
    {:_id         62
     :restricted  ["iterate"]
@@ -563,7 +645,8 @@ and a vector of values and constructs a map from them."
 and an initial value x
 write a function which returns an infinite lazy sequence
 of x, (f x), (f (f x)), (f (f (f x))), etc."
-    :tags        ["easy" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         63
     :restricted  ["group-by"]
@@ -576,7 +659,8 @@ write a function which returns a map.
 The keys should be the values of f applied to each item in s.
 The value at each key should be a vector
 of corresponding items in the order they appear in s."
-    :tags        ["medium" "seqs" "core-functions"]}
+    :difficulty "easy" 
+    :tags ["core-functions"]}
 
    {:_id         64
     :title       "Intro to Reduce"
@@ -591,7 +675,8 @@ In the next iteration the function will be called on
 the previous return value and the next item from the sequence,
 thus reducing the entire collection to one value.
 Don't worry, it's not as complicated as it sounds."
-    :tags        ["elementary" "seqs"]}
+    :difficulty "elementary" 
+    :tags ["seqs"]}
 
    {:_id         65
     :title       "Black Box Testing"
@@ -608,13 +693,14 @@ describing the type of collection it was given.
 You won't be allowed to inspect their class
 or use the built-in predicates like list? -
 the point is to poke at them and understand their behavior."
-    :tags        ["hard" "seqs" "testing"]
     :tests       ["(= :map (__ {:a 1, :b 2}))"
                   "(= :list (__ (range (rand-int 20))))"
                   "(= :vector (__ [1 2 3 4 5 6]))"
                   "(= :set (__ #{10 (rand-int 5)}))"
                   "(= [:map :set :vector :list] (map __ [{} #{} [] ()]))"]
-    :restricted  ["class" "type" "Class" "vector?" "sequential?" "list?" "seq?" "map?" "set?" "instance?" "getClass"]}
+    :restricted  ["class" "type" "Class" "vector?" "sequential?" "list?" "seq?" "map?" "set?" "instance?" "getClass"] 
+    :difficulty "medium" 
+    :tags ["seqs" "testing"]}
 
    {:_id         66
     :title       "Greatest Common Divisor"
@@ -624,7 +710,8 @@ the point is to poke at them and understand their behavior."
                   "(= (__ 1023 858) 33)"]
     :description "Given two integers, write a function which
 returns the greatest common divisor."
-    :tags        ["easy"]}
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         67
     :title       "Prime Numbers"
@@ -633,7 +720,8 @@ returns the greatest common divisor."
                   "(= (last (__ 100)) 541)"]
     :description "Write a function which returns the first x
 number of prime numbers."
-    :tags        ["medium" "primes"]}
+    :difficulty "medium" 
+    :tags ["primes"]}
 
    {:_id         68
     :title       "Recurring Theme"
@@ -645,7 +733,8 @@ Either way, recur rebinds the bindings
 of the recursion point to the values it is passed.
 Recur must be called from the tail-position,
 and calling it elsewhere will result in an error."
-    :tags        ["elementary" "recursion"]}
+    :difficulty "elementary" 
+    :tags ["recursion"]}
 
    {:_id         69
     :restricted  ["merge-with"]
@@ -661,7 +750,8 @@ If a key occurs in more than one map,
 the mapping(s) from the latter (left-to-right)
 should be combined with the mapping in the result
 by calling (f val-in-result val-in-latter)"
-    :tags        ["medium" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["core-functions"]}
 
    {:_id         70
     :title       "Word Sorting"
@@ -672,7 +762,8 @@ by calling (f val-in-result val-in-latter)"
 into a sorted list of words.
 Capitalization should not affect sort order
 and punctuation should be ignored."
-    :tags        ["medium" "sorting"]}
+    :difficulty "medium" 
+    :tags ["sorting"]}
 
    {:_id         71
     :title       "Rearranging Code: ->"
@@ -684,7 +775,8 @@ Then the first form is inserted as the second item in the second form,
 making a list of that form if necessary.
 This process continues for all the forms.
 Using -> can sometimes make your code more readable."
-    :tags        ["elementary"]}
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         72
     :title       "Rearranging Code: ->>"
@@ -697,7 +789,8 @@ Then the first form is inserted as the last item in the second form,
 making a list of that form if necessary.
 This process continues for all the forms.
 Using ->> can sometimes make your code more readable."
-    :tags        ["elementary"]}
+    :difficulty "elementary" 
+    :tags []}
 
    {:_id         73
     :title       "Analyze a Tic-Tac-Toe Board"
@@ -717,7 +810,8 @@ in a horizontal, vertical, or diagonal row.
 Write a function which analyzes a tic-tac-toe board
 and returns :x if X has won, :o if O has won,
 and nil if neither player has won."
-    :tags        ["medium" "game"]}
+    :difficulty "hard" 
+    :tags ["game"]}
 
    {:_id         74
     :title       "Filter Perfect Squares"
@@ -726,7 +820,8 @@ and nil if neither player has won."
     :description "Given a string of comma separated integers,
 write a function which returns a new comma separated string
 that only contains the numbers which are perfect squares."
-    :tags        ["medium"]}
+    :difficulty "medium" 
+    :tags []}
 
    {:_id         75
     :title       "Euler's Totient Function"
@@ -739,7 +834,8 @@ Euler's totient function f(x) is defined as
 the number of positive integers less than x which are coprime to x.
 The special case f(1) equals 1.
 Write a function which calculates Euler's totient function."
-    :tags        ["medium"]}
+    :difficulty "medium" 
+    :tags []}
 
    {:_id         76
     :title       "Intro to Trampoline"
@@ -753,7 +849,8 @@ This is repeated, until the return value is not a function,
 and then trampoline returns that non-function value.
 This is useful for implementing mutually recursive algorithms
 in a way that won't consume the stack."
-    :tags        ["medium" "recursion"]}
+    :difficulty "medium" 
+    :tags ["recursion"]}
 
    {:_id         77
     :title       "Anagram Finder"
@@ -768,7 +865,8 @@ where each sub-set is a group of words
 which are anagrams of each other.
 Each sub-set should have at least two words.
 Words without any anagrams should not be included in the result."
-    :tags        ["medium"]}
+    :difficulty "medium" 
+    :tags []}
 
    {:_id         78
     :restricted  ["trampoline"]
@@ -776,7 +874,8 @@ Words without any anagrams should not be included in the result."
     :tests       ["(= (letfn [(triple [x] #(sub-two (* 3 x)))\n          (sub-two [x] #(stop?(- x 2)))\n          (stop? [x] (if (> x 50) x #(triple x)))]\n    (__ triple 2))\n  82)"
                   "(= (letfn [(my-even? [x] (if (zero? x) true #(my-odd? (dec x))))\n          (my-odd? [x] (if (zero? x) false #(my-even? (dec x))))]\n    (map (partial __ my-even?) (range 6)))\n  [true false true false true false])"]
     :description "Reimplement the function described in <a href=\"76\"> \"Intro to Trampoline\"</a>."
-    :tags        ["medium" "core-functions"]}
+    :difficulty "medium" 
+    :tags ["core-functions"]}
 
    {:_id         79
     :title       "Triangle Minimal Path"
@@ -788,7 +887,8 @@ The triangle is represented as a vector of vectors.
 The path should start at the top of the triangle
 and move to an adjacent number on the next row
 until the bottom of the triangle is reached."
-    :tags        ["hard"]}
+    :difficulty "hard" 
+    :tags ["graph-theory"]}
 
    {:_id         80
     :title       "Perfect Numbers"
@@ -802,7 +902,8 @@ equal the number itself.
 6 is a perfect number because 1+2+3=6.
 Write a function which returns true for perfect numbers
 and false otherwise."
-    :tags        ["medium"]}
+    :difficulty "medium" 
+    :tags []}
 
    {:_id         81
     :restricted  ["intersection"]
@@ -814,7 +915,8 @@ and false otherwise."
 the intersection of two sets.
 The intersection is the sub-set of items
 that each set has in common."
-    :tags        ["easy" "set-theory"]}
+    :difficulty "easy" 
+    :tags ["set-theory"]}
 
    {:_id         82
     :title       "Word Chains"
@@ -838,7 +940,8 @@ Write a function which takes a sequence of words,
 and returns true if they can be
 arranged into one continous word chain,
 and false if they cannot."
-    :tags        ["hard" "seqs"]}
+    :difficulty "hard" 
+    :tags ["seqs"]}
 
    {:_id         83
     :title       "A Half-Truth"
@@ -854,7 +957,8 @@ Your function should return true if
 some of the parameters are true,
 but not all of the parameters are true.
 Otherwise your function should return false."
-    :tags        ["easy"]}
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         84
     :title  "Transitive Closure"
@@ -863,7 +967,9 @@ Otherwise your function should return false."
             "(let [progeny\n      #{[\"father\" \"son\"] [\"uncle\" \"cousin\"] [\"son\" \"grandson\"]}]\n  (= (__ progeny)\n     #{[\"father\" \"son\"] [\"father\" \"grandson\"]\n       [\"uncle\" \"cousin\"] [\"son\" \"grandson\"]}))"]
     :description "Write a function which generates
 the transitive closure of a binary relation.
-The relation will be represented as a set of 2 item vectors.", :tags ["hard" "set-theory"]}
+The relation will be represented as a set of 2 item vectors.",
+    :difficulty "hard" 
+    :tags ["set-theory"]}
 
    {:_id 85 :title "Power Set"
     :tests ["(= (__ #{1 :a}) #{#{1 :a} #{:a} #{} #{1}})"
@@ -871,7 +977,9 @@ The relation will be represented as a set of 2 item vectors.", :tags ["hard" "se
             "(= (count (__ (into #{} (range 10)))) 1024)"],
     :description "Write a function which generates the power set of a given set.
 The power set of a set x is the set of all subsets of x,
-including the empty set and x itself.", :tags ["hard" "set-theory"]}
+including the empty set and x itself.",
+    :difficulty "medium" 
+    :tags ["set-theory"]}
 
    {:_id 86 :title "Happy numbers"
     :tests ["(= (__ 7) true)"
@@ -885,8 +993,9 @@ Repeat with the new number and eventually,
 you might get to a number whose squared sum is 1.
 This is a happy number.
 An unhappy number (or sad number) is one that loops endlessly.
-Write a function that determines if a number is happy or not.", :tags
-    ["easy" "math"]}
+Write a function that determines if a number is happy or not.",
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id 87 :title "Create an Equation"
     :tests ["(= (__ 3 4 7) '(= (+ 3 4) 7))" "(= (__ 3 4 12) '(= (* 3 4) 12))" "(= (__ 3 4 14) nil)" "(= (__ 3 4 5 35) '(= (* (+ 3 4) 5) 35))" "(= (__ 3 4 5 60) '(= (+ (* 3 4) 5) 60))" "(= (__ 3 4 5 23) '(= (+ 3 (* 4 5)) 23))" "(= (__ 3 4 5 27) '(= (* 3 (+ 4 5)) 27))" "(= (__ 3 4 5 6) nil)" "(= (__ 1 2 10 100 2001) '(= (+ 1 (* 2 10 100)) 2001)" "(= (__ 1 2 10 100 1300) '(= (* (+ 1 2 10) 100) 1300)"],
@@ -899,7 +1008,9 @@ The following rules for the equation must be satisfied:\n
    maintained when reading the equation left-to-right.\n
 3. The only functions you may use are +, *, or =.\n
 4. The equation must use the minimum number of parentheses.\n
-5. If no satisfying equation exists, return nil.", :tags ["hard" "code-generation"]}
+5. If no satisfying equation exists, return nil.",
+    :difficulty "" 
+    :tags nil}
 
    {:_id 88 :title "Symmetric Difference"
     :tests ["(= (__ #{1 2 3 4 5 6} #{1 3 5 7}) #{2 4 6 7})"
@@ -909,7 +1020,9 @@ The following rules for the equation must be satisfied:\n
     :description "Write a function which returns
 the symmetric difference of two sets.
 The symmetric difference is the set of items
-belonging to one but not both of the two sets."}
+belonging to one but not both of the two sets." 
+    :difficulty "easy" 
+    :tags ["set-theory"]}
 
    {:_id 89 :title "Graph Tour"
     :tests ["(= true (__ [[:a :b]]))"
@@ -932,7 +1045,9 @@ The rules are:
 
 - You can start at any node.
 - You must visit each edge exactly once.
-- All edges are undirected."}
+- All edges are undirected." 
+    :difficulty "hard" 
+    :tags ["graph-theory"]}
 
    {:_id 90 :title "Cartesian Product"
     :tests ["(= (__ #{\"ace\" \"king\" \"queen\"} #{\"♠\" \"♥\" \"♦\" \"♣\"})
@@ -944,7 +1059,9 @@ The rules are:
             "(= 300 (count (__ (into #{} (range 10))
                   (into #{} (range 30)))))"]
     :description "Write a function which calculates
-the Cartesian product of two sets."}
+the Cartesian product of two sets." 
+    :difficulty "easy" 
+    :tags ["set-theory"]}
 
    {:_id 91 :title "Graph Connectivity"
     :tests ["(= true (__ #{[:a :a]}))"
@@ -968,7 +1085,9 @@ a path exists between any two given nodes.
  representing the edges of a graph.
  Each member of a tuple being a vertex/node in the graph.
 
--Each edge is undirected (can be traversed either direction)."}
+-Each edge is undirected (can be traversed either direction)." 
+    :difficulty "hard" 
+    :tags ["graph-theory"]}
 
    {:_id 92 :title "Read Roman numerals"
     :tests ["(= 14 (__ \"XIV\"))"
@@ -983,7 +1102,9 @@ and return the number it represents.
 You can assume that the input will be well-formed,
 in upper-case, and follow the subtractive principle.
 You don't need to handle any numbers greater than MMMCMXCIX (3999),
-the largest number representable with ordinary letters."}
+the largest number representable with ordinary letters." 
+    :difficulty "hard" 
+    :tags ["strings" "math"]}
 
    {:_id 93 :title "Partially Flatten a Sequence"
     :tests ["(= (__ [[\"Do\"] [\"Nothing\"]])
@@ -997,7 +1118,9 @@ flattens any nested combination of sequential things
 (lists, vectors, etc.),
 but maintains the lowest level sequential items.
 The result should be a sequence of sequences
-with only one level of nesting."}
+with only one level of nesting." 
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id 94 :title "Game of Life"
     :tests ["(= (__ [\"      \"
@@ -1052,7 +1175,9 @@ and its next state is dependent on the following rules:
    becomes a live cell, as if by reproduction.
 
 Write a function that accepts a board,
-and returns a board representing the next generation of cells."}
+and returns a board representing the next generation of cells." 
+    :difficulty "hard" 
+    :tags ["game"]}
 
    {:_id 95 :title "To Tree, or not to Tree"
     :tests ["(= (__ '(:a (:b nil nil) nil))
@@ -1072,7 +1197,9 @@ and returns a board representing the next generation of cells."}
     :description "Write a predicate which checks whether or not
 a given sequence represents a binary tree.
 Each node in the tree must have a value,
-a left child, and a right child."}
+a left child, and a right child." 
+    :difficulty "easy" 
+    :tags ["trees"]}
 
    {:_id 96 :title "Beauty is Symmetry"
     :tests ["(= (__ '(:a (:b nil nil) (:b nil nil))) true)"
@@ -1093,7 +1220,9 @@ the mirror image of the right half of the tree.
 Write a predicate to determine whether or not
 a given binary tree is symmetric.
 (see To Tree, or not to Tree for a reminder on
-the tree representation we're using)."}
+the tree representation we're using)." 
+    :difficulty "easy" 
+    :tags ["trees"]}
 
    {:_id 97 :title "Pascal's Triangle"
     :tests ["(= (__ 1) [1])"
@@ -1116,7 +1245,9 @@ computed using the following rules:
 and adding a 1 to the beginning and end of the row.
 
 Write a function which returns
-:the nth row of Pascal's Triangle."}
+:the nth row of Pascal's Triangle." 
+    :difficulty "easy" 
+    :tags []}
 
    {:_id 98 :title "Equivalence Classes"
     :tests ["(= (__ #(* % %) #{-2 -1 0 1 2})
@@ -1132,14 +1263,18 @@ induces an equivalence relation on D, as follows:
 a is equivalent to b with respect to f
 if and only if (f a) is equal to (f b).
 Write a function with arguments f and D
-that computes the equivalence classes of D with respect to f."}
+that computes the equivalence classes of D with respect to f." 
+    :difficulty "medium" 
+    :tags []}
 
    {:_id 99 :title "Product Digits"
     :tests ["(= (__ 1 1) [1])"
             "(= (__ 99 9) [8 9 1])"
             "(= (__ 999 99) [9 8 9 0 1])"]
     :description "Write a function which multiplies two numbers
-and returns the result as a sequence of its digits."}
+and returns the result as a sequence of its digits." 
+    :difficulty "easy" 
+    :tags ["math" "seqs"]}
 
    {:_id 100 :title "Least Common Multiple"
     :tests ["(== (__ 2 3) 6)"
@@ -1150,7 +1285,9 @@ and returns the result as a sequence of its digits."}
     :description "Write a function which calculates
 the least common multiple.
 Your function should accept a variable number
-of positive integers or ratios."}
+of positive integers or ratios." 
+    :difficulty "easy" 
+    :tags ["math"]}
 
    {:_id 101 :title "Levenshtein Distance"
     :tests ["(= (__ \"kitten\" \"sitting\") 3)"
@@ -1172,7 +1309,9 @@ The allowed edits are:
 - replace a single item with another item
 
 WARNING: Some of the test cases may timeout
-if you write an inefficient solution!"}
+if you write an inefficient solution!" 
+    :difficulty "hard" 
+    :tags ["seqs"]}
 
    {:_id 102 :title "intoCamelCase"
     :tests ["(= (__ \"something\") \"something\")"
@@ -1184,7 +1323,9 @@ but you'd rather work with a hashmap
 that has :keys-like-this until it's time to convert.
 Write a function which takes
 lower-case hyphen-separated strings
-and converts them to camel-case strings."}
+and converts them to camel-case strings." 
+    :difficulty "medium" 
+    :tags ["strings"]}
 
    {:_id 103 :title "Generating k-combinations"
     :tests ["(= (__ 1 #{4 5 6}) #{#{4} #{5} #{6}})"
@@ -1200,7 +1341,9 @@ generate all k-combinations of S,
 i.e. generate all possible sets consisting
 of k distinct elements taken from S.
 The number of k-combinations for a sequence
-is equal to the binomial coefficient."}
+is equal to the binomial coefficient." 
+    :difficulty "medium" 
+    :tags ["seqs" "combinatorics"]}
 
    {:_id         104
     :title       "Write Roman Numerals"
@@ -1215,7 +1358,9 @@ is equal to the binomial coefficient."}
     :description "This is the inverse of Problem 92, but much easier.
 Given an integer smaller than 4000,
 return the corresponding roman numeral in uppercase,
-adhering to the subtractive principle."}
+adhering to the subtractive principle." 
+    :difficulty "medium" 
+    :tags ["strings" "math"]}
 
    {:_id         105
     :title       "Identify keys and values"
@@ -1229,7 +1374,9 @@ between it and the next keyword in the sequence."
                          :b [2]} (__ [:a 1, :b 2]))"
                   "(= {:a [1 2 3]
                          :b []
-                         :c [4]} (__ [:a 1 2 3 :b :c 4]))"]}
+                         :c [4]} (__ [:a 1 2 3 :b :c 4]))"] 
+    :difficulty "medium" 
+    :tags ["maps" "seqs"]}
 
    {:_id         106
     :title       "Number Maze"
@@ -1248,7 +1395,9 @@ you must return the length of the shortest path, not the path itself."
                   "(= 3 (__ 12 3))"
                   "(= 3 (__ 5 9))"
                   "(= 9 (__ 9 2))"
-                  "(= 5 (__ 9 12))"]}
+                  "(= 5 (__ 9 12))"] 
+    :difficulty "hard" 
+    :tags ["numbers"]}
 
    {:_id         107
     :title       "Simple closures"
@@ -1271,7 +1420,9 @@ for use outside the scope in which it is defined.
 "
     :tests       ["(= 256 ((__ 2) 16), ((__ 8) 2))"
                   "(= [1 8 27 64] (map (__ 3) [1 2 3 4]))"
-                  "(= [1 2 4 8 16] (map #((__ %) 2) [0 1 2 3 4]))"]}
+                  "(= [1 2 4 8 16] (map #((__ %) 2) [0 1 2 3 4]))"] 
+    :difficulty "easy" 
+    :tags ["higher-order-functions" "math"]}
 
    {:_id         108
     :title       "Lazy Searching"
@@ -1285,7 +1436,9 @@ The sequences may be infinite, so be careful to search lazily."
                   "(= 64 (__ (map #(* % % %) (range))
                                  (filter #(zero? (bit-and % (dec %))) (range))
                                  (iterate inc 20)))"
-                  "(= 7 (__ (range) (range 0 100 7/6) [2 3 5 7 11 13]))"]}
+                  "(= 7 (__ (range) (range 0 100 7/6) [2 3 5 7 11 13]))"] 
+    :difficulty "medium" 
+    :tags ["seqs" "sorting"]}
 
    {:_id         110
     :title       "Sequence of pronunciations"
@@ -1302,7 +1455,9 @@ each element being a pronunciation of the previous element."
     :tests       ["(= [[1 1] [2 1] [1 2 1 1]] (take 3 (__ [1])))"
                   "(= [3 1 2 4] (first (__[1 1 1 4 4])))"
                   "(= [1 1 1 3 2 1 3 2 1 1] (nth (__ [1]) 6))"
-                  "(= 338 (count (nth (__ [3 2]) 15)))"]}
+                  "(= 338 (count (nth (__ [3 2]) 15)))"] 
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id         111
     :title       "Crossword puzzle"
@@ -1335,7 +1490,9 @@ or horizontally (proceeding left-right only)."
                   "(= false (__ \"joy\" [\"c o n j\"                    \"_ _ y _\"                    \"r _ _ #\"]))"
                   "(= true  (__ \"clojure\" [\"_ _ _ # j o y\"
                                           \"_ _ o _ _ _ _\"
-                                           \"_ _ f _ # _ _\"]))"]}
+                                           \"_ _ f _ # _ _\"]))"] 
+    :difficulty "hard" 
+    :tags ["game"]}
 
    {:_id         112
     :title       "Sequs Horribilis"
@@ -1352,7 +1509,9 @@ the head whose sum is less than or equal to the input integer."
                   "(=  (__ 0 [1 2 [3 [4 5] 6] 7])    '())"
                   "(=  (__ 0 [0 0 [0 [0]]])    '(0 0 (0 (0))))"
                   "(=  (__ 1 [-10 [1 [2 3 [4 5 [6 7 [8]]]]]])
-                        '(-10 (1 (2 3 (4)))))"]}
+                        '(-10 (1 (2 3 (4)))))"] 
+    :difficulty "medium" 
+    :tags ["seqs"]}
 
    {:_id         114
     :title       "Global take-while"
@@ -1374,7 +1533,9 @@ but not including, the nth item that satisfies the predicate."
                             [\"this\" \"is\" \"a\" \"sentence\" \"i\" \"wrote\"]))"
                   "(= [\"this\" \"is\"]
                        (__ 1 #{\"a\"}
-                            [\"this\" \"is\" \"a\" \"sentence\" \"i\" \"wrote\"]))"]}
+                            [\"this\" \"is\" \"a\" \"sentence\" \"i\" \"wrote\"]))"] 
+    :difficulty "medium" 
+    :tags ["seqs" "higher-order-functions"]}
 
    {:_id         115
     :title       "The Balance of N"
@@ -1390,7 +1551,9 @@ and returns true iff n is balanced."
                   "(= true (__ 89098))"
                   "(= true (__ 89089))"
                   "(= (take 20 (filter __ (range)))
-                       [0 1 2 3 4 5 6 7 8 9 11 22 33 44 55 66 77 88 99 101])"]}
+                       [0 1 2 3 4 5 6 7 8 9 11 22 33 44 55 66 77 88 99 101])"] 
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id         116
     :title       "Prime Sandwich"
@@ -1401,7 +1564,9 @@ Create a function which takes an integer n,
 and returns true iff it is a balanced prime."
     :tests ["(= false (__ 4))"
             "(= true (__ 563))"
-            "(= 1103 (nth (filter __ (range)) 15))"]}
+            "(= 1103 (nth (filter __ (range)) 15))"] 
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id         117
     :title       "For Science!"
@@ -1458,7 +1623,9 @@ iff the maze is solvable by the mouse."
                                 \"        \"
                                 \" # # # #\"
                                 \"        \"
-                                \"# # # #M\"]))"]}
+                                \"# # # #M\"]))"] 
+    :difficulty "hard" 
+    :tags ["game"]}
    {:_id         118
     :title       "Re-implement Map"
     :description "Map is one of the core elements
@@ -1476,7 +1643,9 @@ return a lazy sequence of (f x) for each element x in s."
                   "(= [1000000 1000001]
                        (->> (__ inc (range))
                             (drop (dec 1000000))
-                            (take 2)))"]}
+                            (take 2)))"] 
+    :difficulty "easy" 
+    :tags ["core-seqs"]}
 
    {:_id         119
     :title       "Win at Tic-Tac-Toe"
@@ -1509,7 +1678,9 @@ For example, [0 1] is the topmost row, center position."
                   "(is (= (__ :o [[:x :x :o]
                                [:o :e :o]
                                [:x :e :e]])
-                      #{[2 2] [1 1]}))"]}
+                      #{[2 2] [1 1]}))"] 
+    :difficulty "hard" 
+    :tags ["game"]}
 
    {:_id         120
     :title       "Sum of square of digits"
@@ -1522,7 +1693,9 @@ whereas 15 is smaller than 1 squared plus 5 squared."
     :tests       ["(= 8 (__ (range 10)))"
                   "(= 19 (__ (range 30)))"
                   "(= 50 (__ (range 100)))"
-                  "(= 50 (__ (range 1000)))"]}
+                  "(= 50 (__ (range 1000)))"] 
+    :difficulty "easy" 
+    :tags ["math"]}
 
    {:_id         121
     :title       "Universal Computation Engine"
@@ -1551,7 +1724,9 @@ containing the map of variable names to their values."
                   "(= 1 ((__ '(/ (+ x 2)
                                   (* 3 (+ y 1))))
                          '{x 4
-                           y 1}))"]}
+                           y 1}))"] 
+    :difficulty "medium" 
+    :tags ["functions"]}
 
    {:_id         122
     :title       "Read a binary number"
@@ -1564,7 +1739,9 @@ to its numerical value."
                   "(= 9     (__ \"1001\"))"
                   "(= 255   (__ \"11111111\"))"
                   "(= 1365  (__ \"10101010101\"))"
-                  "(= 65535 (__ \"1111111111111111\"))"]}
+                  "(= 65535 (__ \"1111111111111111\"))"] 
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         124
     :title       "Analyze Reversi"
@@ -1619,7 +1796,9 @@ second column from the left."
                       (__ '[[e e w e]
                                  [b b w e]
                                  [b w w e]
-                                 [b w w w]] 'b))"]}
+                                 [b w w w]] 'b))"] 
+    :difficulty "hard" 
+    :tags ["game"]}
 
    {:_id         125
     :title       "Gus' Quinundrum"
@@ -1635,14 +1814,17 @@ Fun fact: Gus is the name of the 4Clojure dragon."
     :tests       ["(= (__ '(fn [x] (__ x x))
                             '(fn [x] (__ x x)))
                        ((fn [x] (__ x x))
-                        '(fn [x] (__ x x))))"]}
+                        '(fn [x] (__ x x))))"] 
+    :difficulty "hard" 
+    :tags ["logic" "fun" "brain-teaser"]}
 
    {:_id         126
     :title       "Through the Looking Class"
     :description "Enter a value which satisfies the following:"
     :tests       ["(let [x __]
                      (and (= (class x) x) x))"]
-    :tags        ["easy" "fun brain-teaser"]}
+    :difficulty "easy" 
+    :tags ["fun" "brain-teaser"]}
 
    {:_id         127
     :title       "Love Triangle"
@@ -1730,7 +1912,9 @@ your function should return nil"
                                         ; 00000  ->  00000
                                         ; 11111      11111
                                         ; 00000      00000
-                  ]}
+                  ] 
+    :difficulty "hard" 
+    :tags ["search" "data-juggling"]}
 
    {:_id         128
     :title       "Recognize Playing Cards"
@@ -1753,7 +1937,8 @@ Write a function which converts (for example) the string \"SJ\" into a map of
                   "(= (range 13) (map (comp :rank __ str)
                                       '[S2 S3 S4 S5 S6 S7
                                         S8 S9 ST SJ SQ SK SA]))"]
-    :tags        ["easy" "strings game"]}
+    :difficulty "easy" 
+    :tags ["strings" "game"]}
 
    {:_id         131
     :title       "Sum Some Set Subsets"
@@ -1784,7 +1969,8 @@ subset with an equivalent summation."
                                 #{1 -1 2 -2 4 -4 8 -8}))"
                   "(= true  (__ #{-10 9 -8 7 -6 5 -4 3 -2 1}
                                 #{10 -9 8 -7 6 -5 4 -3 2 -1}))"]
-    :tags        ["medium" "math"]}
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id         132
     :title       "Intervals"
@@ -1802,7 +1988,8 @@ is inserted between every two items that satisfy the predicate."
                                     (__ (fn [a b] ; both even or both odd
                                           (= (mod a 2) (mod b 2)))
                                         :same))))"]
-    :tags        ["medium" "seqs core-functions"]}
+    :difficulty "medium" 
+    :tags ["seqs" "core-functions"]}
 
    {:_id         134
     :title       "A nil key"
@@ -1811,7 +1998,8 @@ the map contains an entry with that key and its value is nil."
     :tests       ["(true?  (__ :a {:a nil :b 2}))"
                   "(false? (__ :b {:a nil :b 2}))"
                   "(false? (__ :c {:a nil :b 2}))"]
-    :tags        ["elementary" "maps"]}
+    :difficulty "elementary" 
+    :tags ["maps"]}
 
    {:_id         135
     :title       "Infix Calculator"
@@ -1825,7 +2013,8 @@ not do precedence and instead just calculates left to right."
                   "(= 42 (__ 38 + 48 - 2 / 2))"
                   "(= 8  (__ 10 / 2 - 1 * 2))"
                   "(= 72 (__ 20 / 2 + 2 + 4 + 8 - 6 - 10 * 9))"]
-    :tags        ["easy" "higher-order-functions math"]}
+    :difficulty "easy" 
+    :tags ["higher-order-functions" "math"]}
 
    {:_id         137
     :title       "Digits and bases"
@@ -1839,7 +2028,9 @@ e.g. 15 would be [1 5] in base 10,
                   "(= [0] (__ 0 11))"
                   "(= [1 0 0 1] (__ 9 2))"
                   "(= [1 0] (let [n (rand-int 100000)] (__ n n)))"
-                  "(= [16 18 5 24 15 1] (__ Integer/MAX_VALUE 42))"]}
+                  "(= [16 18 5 24 15 1] (__ Integer/MAX_VALUE 42))"] 
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id         140
     :title       "Veitch, Please!"
@@ -1934,7 +2125,9 @@ PS — You may want to read about K-Maps before proceeding."
                                 #{'a 'b 'C 'd}
                                 #{'A 'b 'C 'd}})
                       #{#{'B 'D}
-                        #{'b 'd}})"]}
+                        #{'b 'd}})"] 
+    :difficulty "hard" 
+    :tags ["math" "circuit-design"]}
 
    {:_id         141
     :title       "Tricky card games"
@@ -1965,7 +2158,8 @@ by Problem 128, Recognize Playing Cards: a hash-map of :suit and a numeric
                   "(= {:suit :heart :rank 8}
                       ((__ :heart) [{:suit :heart :rank 6} {:suit :heart :rank 8}
                                     {:suit :diamond :rank 10} {:suit :heart :rank 4}]))"]
-    :tags        ["medium" "game cards"]}
+    :difficulty "medium" 
+    :tags ["game" "cards"]}
 
    {:_id         143
     :title       "dot product"
@@ -1975,7 +2169,8 @@ You may assume that the vectors will have the same length."
                   "(= 3 (__ [1 1 1] [1 1 1]))"
                   "(= 32 (__ [1 2 3] [4 5 6]))"
                   "(= 256 (__ [2 5 6] [100 10 1]))"]
-    :tags        ["easy" "seqs math"]}
+    :difficulty "easy" 
+    :tags ["seqs" "math"]}
 
    {:_id         144
     :title       "Oscilrate"
@@ -1986,7 +2181,8 @@ from the first function after it hits the end."
     :tests       ["(= (take 3 (__ 3.14 int double)) [3.14 3 3.0])"
                   "(= (take 5 (__ 3 #(- % 3) #(+ 5 %))) [3 0 5 2 7])"
                   "(= (take 12 (__ 0 inc dec inc dec inc)) [0 1 0 1 0 1 2 1 2 1 2 3])"]
-    :tags        ["medium" "sequences"]}
+    :difficulty "medium" 
+    :tags ["sequences"]}
 
    {:_id         145
     :title       "For the win"
@@ -2004,7 +2200,8 @@ expressions and try to see how each of them produces the same result."
                            z))"
                   "(= __ (for [[x y] (partition 2 (range 20))]
                            (+ x y)))"]
-    :tags        ["elementary" "core-functions seqs"]}
+    :difficulty "elementary" 
+    :tags ["core-functions" "seqs"]}
 
    {:_id         146
     :title       "Trees into tables"
@@ -2032,7 +2229,8 @@ it alone.
                         [[2] u] v, [[2] w] x})"
                   "(= (__ '{m {1 [a b c] 3 nil}})
                       '{[m 1] [a b c], [m 3] nil})"]
-    :tags        ["easy" "seqs maps"]}
+    :difficulty "easy" 
+    :tags ["seqs" "maps"]}
 
    {:_id         147
     :title       "Pascal's Trapezoid"
@@ -2049,7 +2247,8 @@ Clojure's slower, arbitrary-precision bigint."
                   "(= (take 5 (__ [1])) [[1] [1 1] [1 2 1] [1 3 3 1] [1 4 6 4 1]])"
                   "(= (take 2 (__ [3 1 2])) [[3 1 2] [3 4 3 2]])"
                   "(= (take 100 (__ [2 4 2])) (rest (take 101 (__ [2 2]))))"]
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         148
     :title       "The Big Divide"
@@ -2069,7 +2268,8 @@ exceed the time limit."
                       (str (__ (* 10000 10000 10000) 757 809)))"
                   "(= \"4530161696788274281\"
                       (str (__ (* 10000 10000 1000) 1597 3571)))"]
-    :tags        ["medium" "math"]}
+    :difficulty "medium" 
+    :tags ["math"]}
 
    {:_id         150
     :title       "Palindromic Numbers"
@@ -2101,7 +2301,8 @@ The most simple solution will exceed the time limit!"
                       (apply < (take 6666 (__ 9999999))))"
                   "(= (nth (__ 0) 10101)
                       9102019)"]
-    :tags        ["medium" "seqs math"]}
+    :difficulty "medium" 
+    :tags ["seqs" "math"]}
 
    {:_id         153
     :title       "Pairwise Disjoint Sets"
@@ -2149,7 +2350,8 @@ test cases are a bit tricky, so pay a little more attention to them.
                              #{(do) set contains? nil?}
                              #{, , , #_, , empty?}})
                        false)"]
-    :tags        ["easy" "set-theory"]}
+    :difficulty "easy" 
+    :tags ["set-theory"]}
 
    {:_id         156
     :title       "Map Defaults"
@@ -2163,7 +2365,8 @@ function which takes a default value and a sequence of keys and constructs a map
     :tests       ["(= (__ 0 [:a :b :c]) {:a 0 :b 0 :c 0})"
                   "(= (__ \"x\" [1 2 3]) {1 \"x\" 2 \"x\" 3 \"x\"})"
                   "(= (__ [:a :b] [:foo :bar]) {:foo [:a :b] :bar [:a :b]})"]
-    :tags        ["elementary" "seqs"]}
+    :difficulty "elementary" 
+    :tags ["seqs"]}
 
    {:_id         157
     :title       "Indexing Sequences"
@@ -2172,7 +2375,8 @@ elements along with their index."
     :tests       ["(= (__ [:a :b :c]) [[:a 0] [:b 1] [:c 2]])"
                   "(= (__ [0 1 3]) '((0 0) (1 1) (3 2)))"
                   "(= (__ [[:foo] {:bar :baz}]) [[[:foo] 0] [{:bar :baz} 1]])"]
-    :tags        ["easy" "seqs"]}
+    :difficulty "easy" 
+    :tags ["seqs"]}
 
    {:_id         158
     :title       "Decurry"
@@ -2194,7 +2398,8 @@ Return an equivalent function of n arguments. "
                                 (fn [b]
                                   (* a b))))
                           5 5))"]
-    :tags        ["medium" "partial-functions"]}
+    :difficulty "medium" 
+    :tags ["partial-functions"]}
 
    {:_id         161
     :title       "Subset and Superset"
@@ -2204,7 +2409,8 @@ Return an equivalent function of n arguments. "
                   "(clojure.set/subset? #{1} __)"
                   "(clojure.set/superset? __ #{1 2})"
                   "(clojure.set/subset? #{1 2} __)"]
-    :tags        ["elementary" "set-theory"]}
+    :difficulty "elementary" 
+    :tags ["set-theory"]}
 
    {:_id         162
     :title       "Logical falsity and truth"
@@ -2217,7 +2423,8 @@ falsity in conditional tests - anything else is logical truth."
                   "(= __ (if [0] 1 0))"
                   "(= __ (if 0 1 0))"
                   "(= __ (if 1 1 0))"]
-    :tags        ["elementary" "logic"]}
+    :difficulty "elementary" 
+    :tags ["logic"]}
 
    {:_id         166
     :title       "Comparisons"
@@ -2235,7 +2442,8 @@ for the relationship between x and y are as follows:
                   "(= :eq (__ (fn [x y] (< (count x) (count y))) \"pear\" \"plum\"))"
                   "(= :lt (__ (fn [x y] (< (mod x 5) (mod y 5))) 21 3))"
                   "(= :gt (__ > 0 2))"]
-    :tags        ["easy"]}
+    :difficulty "easy" 
+    :tags []}
 
    {:_id         168
     :title       "Infinite Matrix"
@@ -2300,7 +2508,8 @@ consists of the first s entries of each of the first t columns of the matrix B."
                               (check #(= %2 [(+ m %) n]) column)
                               (check #(= %2 [(+ m %) (+ n %)]) diagonal)))
                       true)"]
-    :tags        ["medium" "seqs recursion math "]}
+    :difficulty "medium" 
+    :tags ["seqs" "recursion" "math"]}
 
    {:_id         171
     :title       "Intervals"
@@ -2314,7 +2523,9 @@ are contained in the input sequence."
                   "(= (__ [1 1 1 1 1 1 1]) [[1 1]])"
                   "(= (__ []) [])"
                   "(= (__ [19 4 17 1 3 10 2 13 13 2 16 4 2 15 13 9 6 14 2 11])
-                      [[1 4] [6 6] [9 11] [13 17] [19 19]])"]}
+                      [[1 4] [6 6] [9 11] [13 17] [19 19]])"] 
+    :difficulty "medium" 
+    :tags []}
 
    {:_id         173
     :title       "Intro to Destructuring 2"
@@ -2325,7 +2536,8 @@ the bindings so all let-parts evaluate to 3."
                       (let [[__] [+ (range 3)]] (apply __))
                       (let [[[__] b] [[+ 1] 2]] (__ b))
                       (let [[__] [inc 2]] (__)))"]
-    :tags        ["easy" "destructuring"]}
+    :difficulty "easy" 
+    :tags ["destructuring"]}
 
    {:_id         177
     :title       "Balancing Brackets"
@@ -2345,7 +2557,8 @@ properly paired and legally nested, or returns falsey otherwise."
                   "(__ \"([]([(()){()}(()(()))(([[]]({}()))())]((((()()))))))\")"
                   "(not (__ \"([]([(()){()}(()(()))(([[]]({}([)))())]((((()()))))))\"))"
                   "(not (__ \"[\"))"]
-    :tags        ["medium" "parsing"]}
+    :difficulty "medium" 
+    :tags ["parsing"]}
 
    {:_id         195
     :title       "Parentheses... Again"
@@ -2369,4 +2582,5 @@ There is an interesting pattern in the numbers!"
                   "(= 16796 (count (__ 10)))"
                   "(= (nth (sort (filter #(.contains ^String % \"(()()()())\") (__ 9))) 6) \"(((()()()())(())))\")"
                   "(= (nth (sort (__ 12)) 5000) \"(((((()()()()()))))(()))\")"]
-    :tags        ["medium" "math combinatorics"]}])
+    :difficulty "medium" 
+    :tags ["math" "combinatorics"]}])

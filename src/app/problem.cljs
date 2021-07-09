@@ -1,15 +1,12 @@
 (ns app.problem
   (:require [app.data :as data]
-            [app.state :as state]
-            [alandipert.storage-atom :as lstore]
+            [app.state :as state :refer [db]]
             [clojure.string :as str]
             [goog.object :as gobj]
             [reagent.core :as r]
             [sci.core :as sci]))
 
-(defonce user-data
-  (lstore/local-storage (r/atom {})
-                        :4ever-clojure))
+(def user-data (r/cursor db [:solutions]))
 
 (defn get-problem [id]
   (first
@@ -21,41 +18,44 @@
 
 (defn check-solution [problem user-solution]
   (try
-    (let [replaced   (mapv #(str/replace % "__" user-solution) (:tests problem))
-          results (map eval-string replaced)
-          passed (count (filter true? results))
-          failed (count (filter false? results))]
+    (let [replaced (mapv #(str/replace % "__" user-solution) (:tests problem))
+          results  (map eval-string replaced)
+          passed   (count (filter true? results))
+          failed   (count (filter false? results))]
+      (swap! user-data assoc (:_id problem) {:code   user-solution
+                                             :passed passed
+                                             :failed failed})
       (js/alert (str "Passed: " passed " / Failed: " failed)))
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn input-block [idk solution]
-  [:pre
-   [:textarea {:name "user-solution"
-               :value solution
-               :on-change #(swap! user-data assoc idk (-> % .-target .-value))
-               :rows 8}]])
+(defn user-code-section [id problem solution]
+  (r/with-let [code (r/atom (:code solution ""))]
+    [:div
+     [:p "Write code which will fill in the above blanks:"]
+     [:pre
+      [:textarea {:name "user-solution"
+                  :value @code
+                  :on-change #(reset! code (-> % .-target .-value))
+                  :rows 8}]]
+     [:button {:disabled (some-> (:code solution "")
+                                 str/trim
+                                 str/blank?)
+               :on-click #(check-solution problem @code)} "Run"]
+     ]))
 
 (defn view [{:keys [path-params] :as props}]
   (fn [{:keys [path-params] :as props}]
-    (let [idn (js/parseInt (:id path-params))
-          idk (keyword (:id path-params))
-          solution (if (nil? (idk @user-data))
-                     ""
-                     (idk @user-data))
-          problem (get-problem idn)]
+    (let [id (js/parseInt (:id path-params))
+          solution (get @user-data id)
+          problem (get-problem id)]
       [:div
-       [:h3 "Problem " idn]
+       [:h3 "Problem " id]
        [:p (:description problem)]
        [:ul
-        (for [[i test] (map vector (range) (:tests problem))]
+        (for [[i test] (map-indexed vector (:tests problem))]
           ^{:key i}
           [:li
            [:pre
             [:code test]]])]
-       [:p "Write code which will fill in the above blanks:"]
-       [input-block idk solution]
-       [:button {:disabled (-> solution
-                               str/trim
-                               str/blank?)
-                 :on-click #(check-solution problem solution)} "Run"]])))
+       [user-code-section id problem solution]])))
