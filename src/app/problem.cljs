@@ -38,6 +38,10 @@
   (r/with-let [code (r/atom (:code solution ""))]
     [:div
      [:p "Write code which will fill in the above blanks:"]
+     (when (:restricted problem) [:p {:style {:color "#FF0000" :border-color "darkred"
+                                              :border-style "dashed" :padding "10px"}}
+                                  "Special Restrictions : "
+                                  (str/join "," (:restricted problem))])
      [:div {:style {:marginBottom "2.5rem"}}
       [:> AceEditor
        {:mode      :clojure
