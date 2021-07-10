@@ -36,12 +36,12 @@ shadow hosts the dev server at http://localhost:8000
 ## Todos
 
 - [x] Ship a crude version
-- [ ] Make it noice!
+- [x] Make it noice!
 - [x] use localstorage to store solutions
-- [ ] easy navigation
-- [ ] scrape problem difficulty (can perhaps also get ranks data?)
+- [x] easy navigation
+- [x] scrape problem difficulty (can perhaps also get ranks data?)
 - [ ] better alerts (modals?)
-- [ ] show user which problems they have solved
+- [x] show user which problems they have solved
 - [ ] import /export data of the user in a .edn file
 - [ ] github actions auto deployment
 - [ ] create a new section of problems "community powered questions"
