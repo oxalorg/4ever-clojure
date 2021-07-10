@@ -4,6 +4,18 @@
             [app.routes :as routes]
             [reagent.dom :as rdom]))
 
+(def notification
+  [:div {:style {:background-color "#D6D0FD"
+                 :position "absolute"
+                 :top 0
+                 :left 0
+                 :width "100%"
+                 :text-align "center"
+                 :padding "0.5rem"}}
+   [:small
+    "11th July - New editor based on codemirror & nextjournal/clojure-mode added
+    🎉!!"]])
+
 (defn header []
   [:header
    [:h1 "4ever-clojure"]
@@ -16,7 +28,8 @@
      "Built with ❤ by "
      [:a {:href "https://twitter.com/oxalorg"} "@oxalorg"]
      " and "
-     [:a {:href "https://twitter.com/lambdaisland"} "@lambdaisland"]]]])
+     [:a {:href "https://twitter.com/lambdaisland"} "@lambdaisland"]]]
+   notification])
 
 (defn main []
   [:div
