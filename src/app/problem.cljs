@@ -4,7 +4,12 @@
             [clojure.string :as str]
             [goog.object :as gobj]
             [reagent.core :as r]
-            [sci.core :as sci]))
+            [sci.core :as sci]
+            ["react-ace" :as AceEditorImport]
+            ["ace-builds/src-noconflict/theme-dracula"]
+            ["ace-builds/src-noconflict/mode-clojure"]))
+
+(def AceEditor (.-default AceEditorImport))
 
 (def user-data (r/cursor db [:solutions]))
 
@@ -33,11 +38,16 @@
   (r/with-let [code (r/atom (:code solution ""))]
     [:div
      [:p "Write code which will fill in the above blanks:"]
-     [:pre
-      [:textarea {:name "user-solution"
-                  :value @code
-                  :on-change #(reset! code (-> % .-target .-value))
-                  :rows 8}]]
+     [:div {:style {:marginBottom "2.5rem"}}
+      [:> AceEditor
+       {:mode      :clojure
+        :theme     :dracula
+        :name      "user-solution"
+        :value     @code
+        :style     {:borderRadius "5px"}
+        :maxLines  15
+        :minLines  15
+        :on-change #(reset! code %)}]]
      [:button {:disabled (-> @code str/trim str/blank?)
                :on-click #(check-solution problem @code)} "Run"]]))
 

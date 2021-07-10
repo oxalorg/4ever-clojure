@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "ace-builds": "^1.4.12",
     "react": "^17.0.2",
+    "react-ace": "^9.4.1",
     "react-dom": "^17.0.2",
     "shadow-cljs": "^2.14.5"
   },
