@@ -14,8 +14,10 @@
     {:solutions {12 {:code \"(fn [x] (apply + x))\"
                      :passed 2
                      :failed 3}
-                 44 {...}}}"
-  {:solutions {}})
+                 44 {...}}
+     :sort-by-solved nil|false|true}"
+  {:solutions {}
+   :sort-by-solved nil})
 
 (defonce db 
   (lstore/local-storage (r/atom {})
