@@ -1,15 +1,11 @@
 (ns app.problem
   (:require [app.data :as data]
             [app.state :as state :refer [db]]
+            [app.editor :as editor]
             [clojure.string :as str]
             [goog.object :as gobj]
             [reagent.core :as r]
-            [sci.core :as sci]
-            ["react-ace" :as AceEditorImport]
-            ["ace-builds/src-noconflict/theme-dracula"]
-            ["ace-builds/src-noconflict/mode-clojure"]))
-
-(def AceEditor (.-default AceEditorImport))
+            [sci.core :as sci]))
 
 (def user-data (r/cursor db [:solutions]))
 
@@ -35,21 +31,19 @@
       (js/alert (gobj/get e "message")))))
 
 (defn user-code-section [id problem solution]
-  (r/with-let [code (r/atom (:code solution ""))]
+  (r/with-let [code (r/atom (:code solution ""))
+               !editor-view (r/atom nil)
+               get-editor-value #(some-> @!editor-view .-state .-doc str)]
     [:div
      [:p "Write code which will fill in the above blanks:"]
-     [:div {:style {:marginBottom "2.5rem"}}
-      [:> AceEditor
-       {:mode      :clojure
-        :theme     :dracula
-        :name      "user-solution"
-        :value     @code
-        :style     {:borderRadius "5px"}
-        :maxLines  15
-        :minLines  15
-        :on-change #(reset! code %)}]]
-     [:button {:disabled (-> @code str/trim str/blank?)
-               :on-click #(check-solution problem @code)} "Run"]]))
+     [editor/editor @code !editor-view {:eval? true}]
+     [:button {:on-click #(check-solution problem (get-editor-value))
+               :style {:margin-top "1rem"}} "Run"]
+     [:p {:style {:margin-top "1rem"}}
+      [:small
+       "Alt+Enter will eval the local form in the editor box above. There are
+        lots of nifty such features and keybindings. More docs coming soon! (Try
+        playing with alt + arrows / ctrl + enter) in the meanwhile."]]]))
 
 (defn view [{:keys [path-params] :as props}]
   (fn [{:keys [path-params] :as props}]

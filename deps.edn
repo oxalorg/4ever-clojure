@@ -3,7 +3,10 @@
  {reagent/reagent {:mvn/version "1.1.0"}
   borkdude/sci {:mvn/version "0.2.5"}
   alandipert/storage-atom {:mvn/version "2.0.1"}
-  metosin/reitit {:mvn/version "0.5.13"}}
+  metosin/reitit {:mvn/version "0.5.13"}
+  applied-science/js-interop {:mvn/version "0.2.5"}
+  nextjournal.clojure-mode {:git/url "https://github.com/nextjournal/clojure-mode"
+                            :sha "a83c87cd2bd2049b70613f360336a096d15c5518"}}
 
  :aliases
  {:dev
