@@ -6,7 +6,8 @@
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
             [nextjournal.clojure-mode.util :as u]))
 
-(defonce context (sci/init {}))
+(defonce context (sci/init {:classes {'js goog/global
+                                      :allow :all}}))
 
 (defn eval-string [source]
   (try (sci/eval-string* context source)
