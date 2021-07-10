@@ -36,6 +36,11 @@
                get-editor-value #(some-> @!editor-view .-state .-doc str)]
     [:div
      [:p "Write code which will fill in the above blanks:"]
+     (when (:restricted problem) [:p {:style {:color "#FF0000" :border-color "darkred"
+                                              :border-style "dashed" :padding "10px"}}
+                                  "Special Restrictions : "
+                                  (str/join "," (:restricted problem))])
+
      [editor/editor @code !editor-view {:eval? true}]
      [:button {:on-click #(check-solution problem (get-editor-value))
                :style {:margin-top "1rem"}} "Run"]
