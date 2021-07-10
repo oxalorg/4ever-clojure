@@ -1,21 +1,24 @@
 (ns app.home
   (:require [app.data :as data]
-            [app.state :as state]
+            [app.state :as state :refer [db]]
             [app.problem :as problem]
             [reagent.core :as r]))
 
-(defonce sort-by-status (r/atom true))
+(def user-data (r/cursor db [:solutions]))
+
+(def sort-by-solved (r/cursor db [:sort-by-solved]))
 
 (defn sorted-problems []
-  (let [solved-keys (set (keys @problem/user-data))
-        p-map (group-by #(contains? solved-keys (:_id %)) data/problems)]
-    (if @sort-by-status
-      (concat (get p-map true) (get p-map false))
-      (concat (get p-map false) (get p-map true)))))
+  (let [data-state
+        (map #(assoc % :solution (get @user-data (:_id %)))
+             data/problems)
+        key (if (nil? @sort-by-solved) :_id :solution)
+        sorted (sort-by key #(not (nil? %)) data-state)]
+    (if (false? @sort-by-solved) (reverse sorted) sorted)))
 
 (defn get-problem-status [id]
   (let [{:keys [passed failed]}
-        (get @problem/user-data (js/parseInt id))
+        (get @user-data (js/parseInt id))
         progress (str passed "/" (+ passed failed))]
     (cond
       (and passed (zero? failed))
@@ -38,13 +41,13 @@
     [:small (str "(" (count data/problems) ")")]]
    (into [:table
           [:tr
-           [:th "No."]
+           [:th {:on-click #(swap! sort-by-solved (fn [] nil))} "No."]
            [:th "Name"]
            [:th "Difficulty"]
            [:th
-            {:on-click #(swap! sort-by-status
-                               (fn [] (if @sort-by-status false true)))}
-            (str "Status  " (if @sort-by-status "🠕" "🠗"))]]
+            {:on-click #(swap! sort-by-solved not)}
+            (str "Status  " (case @sort-by-solved
+                              true "🠕" false "🠗" nil ""))]]
           (for [problem (sorted-problems)]
             ^{:key (:_id problem)}
             [problem-list-item problem])])])
