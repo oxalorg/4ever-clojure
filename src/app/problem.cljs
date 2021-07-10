@@ -38,11 +38,8 @@
                   :value @code
                   :on-change #(reset! code (-> % .-target .-value))
                   :rows 8}]]
-     [:button {:disabled (some-> (:code solution "")
-                                 str/trim
-                                 str/blank?)
-               :on-click #(check-solution problem @code)} "Run"]
-     ]))
+     [:button {:disabled (-> @code str/trim str/blank?)
+               :on-click #(check-solution problem @code)} "Run"]]))
 
 (defn view [{:keys [path-params] :as props}]
   (fn [{:keys [path-params] :as props}]
