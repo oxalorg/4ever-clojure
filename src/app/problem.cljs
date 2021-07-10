@@ -38,7 +38,7 @@
                   :value @code
                   :on-change #(reset! code (-> % .-target .-value))
                   :rows 8}]]
-     [:button {:disabled (some-> (:code solution "")
+     [:button {:disabled (some-> @code
                                  str/trim
                                  str/blank?)
                :on-click #(check-solution problem @code)} "Run"]
