@@ -26,7 +26,7 @@
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn user-code-section [_id problem solution]
+(defn user-code-section [id problem solution]
   (r/with-let [code (r/atom (:code solution ""))
                !editor-view (r/atom nil)
                get-editor-value #(some-> @!editor-view .-state .-doc str)]
