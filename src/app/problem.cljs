@@ -26,7 +26,7 @@
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn user-code-section [id problem solution]
+(defn user-code-section [_id problem solution]
   (r/with-let [code (r/atom (:code solution ""))
                !editor-view (r/atom nil)
                get-editor-value #(some-> @!editor-view .-state .-doc str)]
@@ -55,9 +55,10 @@
        [:h3 "Problem " id]
        [:p (:description problem)]
        [:ul
-        (for [[i test] (map-indexed vector (:tests problem))]
-          ^{:key i}
-          [:li
-           [:pre
-            [:code test]]])]
+        (doall
+         (for [[i test] (map-indexed vector (:tests problem))]
+           ^{:key i}
+           [:li
+            [:pre
+             [:code test]]]))]
        [user-code-section id problem solution]])))
