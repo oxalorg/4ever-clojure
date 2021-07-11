@@ -25,14 +25,14 @@
       (not (nil? passed)) progress
       :else "-")))
 
-(defn problem-list-item [{:keys [id title _tags difficulty]}]
+(defn problem-list-item [{:keys [_id title _tags difficulty]}]
   [:tr
-   [:td id]
+   [:td _id]
    [:td
-    [:a {:href (state/href :problem/item {:id id})}
+    [:a {:href (state/href :problem/item {:id _id})}
      title]]
    [:td difficulty]
-   [:td (get-problem-status id)]])
+   [:td (get-problem-status _id)]])
 
 (defn problem-list []
   [:<>

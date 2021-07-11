@@ -1,17 +1,32 @@
 (ns app.sci
   (:require ["@codemirror/view" :as view]
+            [app.max-or-throw :refer [max-or-throw]]
             [applied-science.js-interop :as j]
-            [finitize.core :refer [finitize]]
+            [clojure.walk :as walk]
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
             [sci.core :as sci]))
 
-(defonce context (sci/init {:classes {'js goog/global
-                                      :allow :all}}))
+(defonce context
+  (sci/init {:classes {'js goog/global
+                       :allow :all}
+             :namespaces {'max-or-throw.core {'max-or-throw max-or-throw}}}))
+
+(def max-seq-limit 10000)
+
+(defn instrument-1 [form]
+  (if (seq? form)
+    (list 'max-or-throw.core/max-or-throw form max-seq-limit)
+    form))
 
 (defn eval-string [source]
-  (try (finitize (sci/eval-string* context source))
-       (catch js/Error e
-         (str e))))
+  (let [rdr (sci/reader source)]
+    (loop [last-result nil]
+      (let [form (sci/parse-next context rdr)]
+        (if (= :sci.core/eof form) last-result
+          (let [instrumented (walk/postwalk instrument-1 form)]
+            (recur (try (sci/eval-form context instrumented)
+                        (catch :default e
+                          (str e))))))))))
 
 (j/defn eval-at-cursor [on-result ^:js {:keys [state]}]
   (some->> (eval-region/cursor-node-string state)
