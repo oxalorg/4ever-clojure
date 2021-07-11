@@ -56,15 +56,15 @@
    (str/join "," (:restricted problem))])
 
 (defn user-code-section [id problem solution]
-  (r/with-let [code (r/atom (:code solution ""))
+  (r/with-let [code (r/atom (if-let [code (:code solution "")]
+                              ;; can sometimes be {:code nil}
+                              code ""))
                !editor-view (r/atom nil)
                get-editor-value #(some-> @!editor-view .-state .-doc str)
                results (r/atom '())
                modal-is-open (r/atom false)
                modal-on-close #(reset! modal-is-open false)
-               next-prob (some
-                          #(when (> (:id %) id) %)
-                          data/problems)
+               next-prob (some #(when (> (:id %) id) %) data/problems)
                on-run (fn []
                         (let [attempts (check-solution problem (get-editor-value))]
                           (when attempts
