@@ -61,7 +61,8 @@
                                                            [(sci/extension
                                                              {:modifier "Alt",
                                                               :on-result
-                                                              (partial reset! last-result)})]))
+                                                              (fn [result]
+                                                                (reset! last-result result))})]))
                                                   source)
 
 
@@ -77,6 +78,6 @@
                  :color "#c3c3c3"
                  :font-family "var(--code-font)"}}
         [:span "user=> "]
-        (prn-str @last-result)])
-     ]
+        (try (prn-str @last-result)
+             (catch :default e (str e)))])]
     (finally (j/call @!view :destroy))))

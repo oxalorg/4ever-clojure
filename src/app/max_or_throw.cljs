@@ -6,8 +6,8 @@
   (max-or-throw [this n]))
 
 (defn bottom [n data]
-  (throw (ex-info (str "Maximum number of elements realized: " n)
-                  data)))
+  (lazy-seq [(throw (ex-info (str "Maximum number of elements realized: " n)
+                             data))]))
 
 (defn take*
   ([n coll err-val]
