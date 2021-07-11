@@ -1,6 +1,10 @@
 # 4ever-clojure
 
-Unfortunately 4clojure is shutting down: https://twitter.com/borkdude/status/1412117420173561861
+Unfortunately 4clojure is shutting down:
+https://twitter.com/borkdude/status/1412117420173561861
+
+Original thread that explains why 4clojure is shutting down:
+https://groups.google.com/g/clojure/c/ZWmDEzvn-Js
 
 > Now that 4clojure is shutting down (thanks for all the year of hosting it!),
 > perhaps it's time to consider some alternatives. - borkdude
@@ -12,7 +16,9 @@ Unfortunately 4clojure is shutting down: https://twitter.com/borkdude/status/141
 > somewhere that way. Perhaps with the option to download your solutions as an
 > archive.
 
-And so I made it, using the awesome [sci](https://github.com/borkdude/sci) and special thanks to [4bb](https://github.com/porkostomus/4bb) from where I copied the problems edn.
+And so I made it, using the awesome [sci](https://github.com/borkdude/sci) and
+special thanks to [4bb](https://github.com/porkostomus/4bb) from where I copied
+the problems edn.
 
 ## Live
 
