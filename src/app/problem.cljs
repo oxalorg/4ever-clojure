@@ -12,7 +12,7 @@
 
 (defn get-problem [id]
   (first
-   (filter #(= (:_id %) id) data/problems)))
+   (filter #(= (:id %) id) data/problems)))
 
 (defn eval-string [s]
   (-> (sci/eval-string s {:classes {'js goog/global
@@ -25,14 +25,14 @@
           results  (map eval-string replaced)
           passed   (count (filter true? results))
           failed   (count (filter false? results))]
-      (swap! user-data assoc (:_id problem) {:code   user-solution
-                                             :passed passed
-                                             :failed failed})
+      (swap! user-data assoc (:id problem) {:code   user-solution
+                                            :passed passed
+                                            :failed failed})
       (js/alert (str "Passed: " passed " / Failed: " failed)))
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn user-code-section [_id problem solution]
+(defn user-code-section [id problem solution]
   (r/with-let [code (r/atom (:code solution ""))
                !editor-view (r/atom nil)
                get-editor-value #(some-> @!editor-view .-state .-doc str)]

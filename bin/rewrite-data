@@ -46,7 +46,7 @@
         (z/edit (fn [problems]
                   (into []
                         (comp
-                         (map #(merge % (get data2 (:_id %))))
+                         (map #(merge % (get data2 (:id %))))
                          (map #(dissoc % :id)))
                         problems)))
         z/root))
@@ -62,7 +62,7 @@
                         (nil? loc) previous-loc
                         :else
                         (let [problem (z/sexpr loc)
-                              {:keys [difficulty tags]} (get data2 (:_id problem) {})]
+                              {:keys [difficulty tags]} (get data2 (:id problem) {})]
                           (recur (-> loc
                                      (z/append-child (node/newlines 1))
                                      (z/append-child (node/spaces 4))

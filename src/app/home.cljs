@@ -9,9 +9,9 @@
 
 (defn sorted-problems []
   (let [data-state
-        (map #(assoc % :solution (get @user-data (:_id %)))
+        (map #(assoc % :solution (get @user-data (:id %)))
              data/problems)
-        key (if (nil? @sort-by-solved) :_id :solution)
+        key (if (nil? @sort-by-solved) :id :solution)
         sorted (sort-by key #(not (nil? %)) data-state)]
     (if (false? @sort-by-solved) (reverse sorted) sorted)))
 
@@ -48,7 +48,7 @@
             (str "Status  " (case @sort-by-solved
                               true "🠕" false "🠗" nil ""))]]
           (for [problem (sorted-problems)]
-            ^{:key (:_id problem)}
+            ^{:key (:id problem)}
             [problem-list-item problem])])])
 
 (defn view []
