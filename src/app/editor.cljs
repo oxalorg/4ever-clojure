@@ -81,7 +81,7 @@
     [:div
      [:div
       {:ref mount!,
-       :style {:max-height 500 :background-color "#e3e3e3"}}]
+       :style {:background-color "#e3e3e3"}}]
      (when eval?
        [:div
         {:style {:white-space "pre-wrap"
