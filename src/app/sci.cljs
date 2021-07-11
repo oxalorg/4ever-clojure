@@ -2,9 +2,9 @@
   (:require ["@codemirror/view" :as view]
             [app.max-or-throw :refer [max-or-throw]]
             [applied-science.js-interop :as j]
-            [clojure.walk :as walk]
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
-            [sci.core :as sci]))
+            [sci.core :as sci]
+            [sci.impl.evaluator]))
 
 (defonce context
   (sci/init {:classes {'js goog/global
@@ -18,15 +18,18 @@
     (list 'max-or-throw.core/max-or-throw form max-seq-limit)
     form))
 
+;; Note from @borkdude: this is a hack. We intercept each result from the
+;; evaluator and wrap it in a call to max-or-throw.
+(defonce instrument-eval
+  (let [old-eval sci.impl.evaluator/eval]
+    (set! sci.impl.evaluator/eval
+          (fn [ctx bindings expr]
+            (max-or-throw (old-eval ctx bindings expr) 10000)))))
+
 (defn eval-string [source]
-  (let [rdr (sci/reader source)]
-    (loop [last-result nil]
-      (let [form (sci/parse-next context rdr)]
-        (if (= :sci.core/eof form) last-result
-          (let [instrumented (walk/postwalk instrument-1 form)]
-            (recur (try (sci/eval-form context instrumented)
-                        (catch :default e
-                          (str e))))))))))
+  (try (sci/eval-string* context source)
+       (catch :default e
+         (str e))))
 
 (j/defn eval-at-cursor [on-result ^:js {:keys [state]}]
   (some->> (eval-region/cursor-node-string state)
