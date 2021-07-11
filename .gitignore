@@ -4,3 +4,4 @@
 /node_modules
 /.nrepl-port
 /.store/
+/.clj-kondo/.cache

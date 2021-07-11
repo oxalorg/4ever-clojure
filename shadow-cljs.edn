@@ -6,4 +6,5 @@
              :output-dir "public/js"
              :asset-path "/js"
              :module-hash-names true
-             :modules {:my-main {:entries [app.core]}}}}}
+             :modules {:my-main {:entries [app.core]}}
+             :build-hooks [(shadow.cljs.build-report/hook)]}}}
