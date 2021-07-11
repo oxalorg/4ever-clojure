@@ -1,10 +1,10 @@
 (ns app.routes
   (:require [app.home :as home]
             [app.problem :as problem]
+            [reagent.core :as r]
             [reitit.frontend :as rf]
             [reitit.frontend.controllers :as rfc]
-            [reitit.frontend.easy :as rfe]
-            [reagent.core :as r]))
+            [reitit.frontend.easy :as rfe]))
 
 (defonce match (r/atom nil))
 

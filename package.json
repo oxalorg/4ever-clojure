@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@codemirror/autocomplete": "0.18.8",
     "@codemirror/closebrackets": "^0.18.0",
     "@codemirror/commands": "^0.18.3",
-    "@codemirror/autocomplete": "0.18.8",
     "@codemirror/comment": "0.18.1",
     "@codemirror/fold": "^0.18.1",
     "@codemirror/gutter": "^0.18.4",

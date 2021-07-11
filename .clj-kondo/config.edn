@@ -1,0 +1,3 @@
+{:lint-as {reagent.core/with-let clojure.core/let
+           applied-science.js-interop/defn clojure.core/defn}
+ :linters {:unsorted-required-namespaces {:level :warning}}}

@@ -1,7 +1,6 @@
 (ns app.home
   (:require [app.data :as data]
             [app.state :as state :refer [db]]
-            [app.problem :as problem]
             [reagent.core :as r]))
 
 (def user-data (r/cursor db [:solutions]))
@@ -26,14 +25,14 @@
       (not (nil? passed)) progress
       :else "-")))
 
-(defn problem-list-item [{:keys [_id title tags difficulty]}]
+(defn problem-list-item [{:keys [id title _tags difficulty]}]
   [:tr
-   [:td _id]
-   [:td 
-    [:a {:href (state/href :problem/item {:id _id})}
+   [:td id]
+   [:td
+    [:a {:href (state/href :problem/item {:id id})}
      title]]
    [:td difficulty]
-   [:td (get-problem-status _id)]])
+   [:td (get-problem-status id)]])
 
 (defn problem-list []
   [:<>

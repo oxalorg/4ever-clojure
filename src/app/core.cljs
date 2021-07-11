@@ -1,7 +1,5 @@
 (ns app.core
-  (:require [reagent.core :as r]
-            [app.data :as data]
-            [app.routes :as routes]
+  (:require [app.routes :as routes]
             [reagent.dom :as rdom]))
 
 (def notification
@@ -34,7 +32,7 @@
 (defn main []
   [:div
    [header]
-   (if-let [match @routes/match]
+   (when-let [match @routes/match]
      (let [view (:view (:data match))]
        [view match]))])
 

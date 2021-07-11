@@ -1,8 +1,9 @@
 (ns app.problem
   (:require [app.data :as data]
-            [app.state :as state :refer [db]]
             [app.editor :as editor]
+            [app.state :as state :refer [db]]
             [clojure.string :as str]
+            [finitize.core :refer [finitize]]
             [goog.object :as gobj]
             [reagent.core :as r]
             [sci.core :as sci]))
@@ -14,8 +15,9 @@
    (filter #(= (:_id %) id) data/problems)))
 
 (defn eval-string [s]
-  (sci/eval-string s {:classes {'js goog/global
-                                :allow :all}}))
+  (-> (sci/eval-string s {:classes {'js goog/global
+                                    :allow :all}})
+      finitize))
 
 (defn check-solution [problem user-solution]
   (try
@@ -30,7 +32,7 @@
     (catch js/Error e
       (js/alert (gobj/get e "message")))))
 
-(defn user-code-section [id problem solution]
+(defn user-code-section [_id problem solution]
   (r/with-let [code (r/atom (:code solution ""))
                !editor-view (r/atom nil)
                get-editor-value #(some-> @!editor-view .-state .-doc str)]
@@ -50,8 +52,8 @@
         lots of nifty such features and keybindings. More docs coming soon! (Try
         playing with alt + arrows / ctrl + enter) in the meanwhile."]]]))
 
-(defn view [{:keys [path-params] :as props}]
-  (fn [{:keys [path-params] :as props}]
+(defn view [_]
+  (fn [{:keys [path-params] :as _props}]
     (let [id (js/parseInt (:id path-params))
           solution (get @user-data id)
           problem (get-problem id)]

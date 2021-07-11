@@ -5,8 +5,10 @@
   alandipert/storage-atom {:mvn/version "2.0.1"}
   metosin/reitit {:mvn/version "0.5.13"}
   applied-science/js-interop {:mvn/version "0.2.5"}
-  nextjournal.clojure-mode {:git/url "https://github.com/nextjournal/clojure-mode"
-                            :sha "a83c87cd2bd2049b70613f360336a096d15c5518"}}
+  nextjournal/clojure-mode {:git/url "https://github.com/nextjournal/clojure-mode"
+                            :sha "a83c87cd2bd2049b70613f360336a096d15c5518"}
+  com.github.borkdude/finitize {:git/url "https://github.com/borkdude/finitize"
+                                :sha "62840885886354a5a95b7404f04fe4596c58e75e"}}
 
  :aliases
  {:dev

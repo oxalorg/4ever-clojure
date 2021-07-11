@@ -1,8 +1,6 @@
 (ns app.state
-  (:require [reagent.core :as r]
-            [alandipert.storage-atom :as lstore]
-            [reitit.frontend :as rf]
-            [reitit.frontend.controllers :as rfc]
+  (:require [alandipert.storage-atom :as lstore]
+            [reagent.core :as r]
             [reitit.frontend.easy :as rfe]))
 
 (def navigate rfe/push-state)

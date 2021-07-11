@@ -1,16 +1,15 @@
 (ns app.sci
   (:require ["@codemirror/view" :as view]
             [applied-science.js-interop :as j]
-            [sci.core :as sci]
-            [nextjournal.clojure-mode.node :as n]
+            [finitize.core :refer [finitize]]
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
-            [nextjournal.clojure-mode.util :as u]))
+            [sci.core :as sci]))
 
 (defonce context (sci/init {:classes {'js goog/global
                                       :allow :all}}))
 
 (defn eval-string [source]
-  (try (sci/eval-string* context source)
+  (try (finitize (sci/eval-string* context source))
        (catch js/Error e
          (str e))))
 
