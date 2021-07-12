@@ -13,7 +13,7 @@
         data (fetch/get (solutions-url id))]
     (-> data
         (.then (fn [resp]
-                 (reset! solutions (js->clj (:body resp))))))))
+                 (reset! solutions (take 1000 (js->clj (:body resp)))))))))
 
 (defn list-view [{:keys [path-params]}]
   (let [id (js/parseInt (:id path-params))]
