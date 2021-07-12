@@ -28,7 +28,7 @@ Deployed at [https://4clojure.oxal.org/](https://4clojure.oxal.org/)
 
 You can view the solutions from each individual page eg: https://4clojure.oxal.org/#/problem/102/solutions
 
-The archive repo is available at: https://github.com/oxalorg/4clojure-solutions-acrhive/
+The archive repo is available at: https://github.com/oxalorg/4clojure-solutions-archive/
 
 ## Develop
 

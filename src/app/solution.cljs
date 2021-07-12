@@ -20,8 +20,8 @@
     [:div
      [:h2 "Solutions for problem #" id]
      [:p "Entire archive available at: "
-      [:a {:href "https://github.com/oxalorg/4clojure-solutions-acrhive/"}
-       "github.com/oxalorg/4clojure-solutions-acrhive/"]]
+      [:a {:href "https://github.com/oxalorg/4clojure-solutions-archive/"}
+       "github.com/oxalorg/4clojure-solutions-archive/"]]
      (if @solutions
        [:div
         (for [solution @solutions]
