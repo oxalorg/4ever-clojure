@@ -108,4 +108,11 @@
            [:li
             [:pre
              [:code test]]]))]
-       [user-code-section id problem solution]])))
+       [user-code-section id problem solution]
+       [:hr]
+       [:p
+        "Want to see how others have solved this? "
+        [:a {:href (state/href :solution/list {:id id})}
+         "View problem #" id " solutions archive"]
+        " No cheating please! :)"]
+       ])))

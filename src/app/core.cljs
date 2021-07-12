@@ -11,8 +11,7 @@
                  :text-align "center"
                  :padding "0.5rem"}}
    [:small
-    "11th July - New editor based on codemirror & nextjournal/clojure-mode added
-    🎉!!"]])
+    "Solutions archive browsable from each problem page 🎉 Huge thanks to Alan!!"]])
 
 (defn header []
   [:header

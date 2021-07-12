@@ -1,6 +1,7 @@
 (ns app.routes
   (:require [app.home :as home]
             [app.problem :as problem]
+            [app.solution :as solution]
             [reagent.core :as r]
             [reitit.frontend :as rf]
             [reitit.frontend.controllers :as rfc]
@@ -14,7 +15,12 @@
    ["/problem" {:name :problem/list
                 :view home/view}]
    ["/problem/:id" {:name :problem/item
-                    :view problem/view}]])
+                    :view problem/view}]
+   ["/problem/:id/solutions" {:name :solution/list
+                              :view solution/list-view
+                              :controllers [{:parameters {:path [:id]}
+                                             :start      (fn [{:keys [path]}]
+                                                           (solution/state-init! (:id path)))}]}]])
 
 (defn route-handler [new-match]
   (swap! match
