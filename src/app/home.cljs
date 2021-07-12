@@ -11,8 +11,9 @@
   (let [data-state
         (map #(assoc % :solution (get @user-data (:id %)))
              data/problems)
-        key (if (nil? @sort-by-solved) :id :solution)
-        sorted (sort-by key #(not (nil? %)) data-state)]
+        sorted (if (nil? @sort-by-solved)
+                 (sort-by :id data-state)
+                 (sort-by :solution #(not (nil? %)) data-state))]
     (if (false? @sort-by-solved) (reverse sorted) sorted)))
 
 (defn get-problem-status [id]
