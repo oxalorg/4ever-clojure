@@ -87,7 +87,7 @@
                  :on-close modal-on-close}
       [modal-results-section @results (:tests problem) (:id problem)]
       [:div
-       [:p
+       [:p {:on-click #(reset! modal-is-open false)}
         "Next problem " 
         [:a {:href (state/href :problem/item {:id (:id next-prob)})}
          (str "#" (:id next-prob) " " (:title next-prob))]]]
