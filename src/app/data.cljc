@@ -1811,10 +1811,7 @@ Hint: Read up on quines if you get stuck
 but it’s worth the effort to solve it independently if you can!
 
 Fun fact: Gus is the name of the 4Clojure dragon."
-    :tests       ["(= (__ '(fn [x] (__ x x))
-                            '(fn [x] (__ x x)))
-                       ((fn [x] (__ x x))
-                        '(fn [x] (__ x x))))"] 
+    :tests       ["(= (str '__) (__))"] 
     :difficulty "hard" 
     :tags ["logic" "fun" "brain-teaser"]}
 
