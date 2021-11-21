@@ -1,0 +1,205 @@
+:root {
+  --dark-teal-color: #095960;
+  --darkest-teal-color: #052e31;
+  --dark-teal-transparent-color: rgba(7, 73, 78, .1);
+
+  --teal-color: #31afd0;
+  --light-teal-color: #eff8fb;
+  --teal-transparent-color: rgba(0, 153, 170, .04);
+
+  --silver-color: #e3e7ef;
+  --light-silver-color: #eef1f6;
+
+  --near-white-color: #f8f8f8;
+  --near-black-color: #2e2e2c;
+  --gray-color: #555;
+
+  --green-color: #74c080;
+  --green-transparent-color: rgba(116, 192, 128, .1);
+
+  --red-color: #d64242;
+  --red-transparent-color: rgba(214, 66, 66, .1);
+
+  --dark-red-color: #ca2834;
+  --orange-color: #ff6300;
+  --blue-color: #0073d9;
+
+  --checkerboard-color: #eee;
+}
+
+.fill-white { fill: white; }
+
+.dark-teal { color: var(--dark-teal-color); }
+.bg-dark-teal { background-color: var(--dark-teal-color); }
+.hover-bg-dark-teal:hover { background-color: var(--dark-teal-color); }
+.fill-dark-teal { fill: var(--dark-teal-color); }
+.border-color-teal { border-color: var(--dark-teal-color); }
+
+.teal { color: var(--teal-color); }
+.bg-teal { background-color: var(--teal-color); }
+.hover-bg-teal:hover { background-color: var(--teal-color); }
+.fill-teal { fill: var(--teal-color); }
+.border-color-teal { border-color: var(--teal-color); }
+.bg-teal-transparent { background-color: var(--teal-transparent-color); }
+.hover-bg-teal-transparent:hover { background-color: var(--teal-transparent-color); }
+
+.light-teal { color: var(--light-teal-color); }
+.bg-light-teal { background-color: var(--light-teal-color); }
+.hover-bg-light-teal:hover { background-color: var(--light-teal-color); }
+.fill-light-teal { fill: var(--light-teal-color); }
+.border-color-light-teal { border-color: var(--light-teal-color); }
+
+.red { color: var(--red-color); }
+.bg-red { background-color: var(--red-color); }
+.hover-bg-red:hover { background-color: var(--red-color); }
+.fill-red { fill: var(--red-color); }
+.border-color-red { border-color: var(--red-color); }
+
+.dark-red { color: var(--dark-red-color); }
+.bg-dark-red { background-color: var(--dark-red-color); }
+.hover-bg-dark-red:hover { background-color: var(--dark-red-color); }
+.fill-dark-red { fill: var(--dark-red-color); }
+.border-color-red { border-color: var(--dark-red-color); }
+
+.green { color: var(--green-color); }
+.bg-green { background-color: var(--green-color); }
+.hover-bg-green:hover { background-color: var(--green-color); }
+.fill-green { fill: var(--green-color); }
+.border-color-green { border-color: var(--green-color); }
+.green-contrast { color: #469c48; }
+
+.silver { color: var(--silver-color); }
+.bg-silver { background-color: var(--silver-color); }
+.hover-bg-silver:hover { background-color: var(--silver-color); }
+.fill-silver { fill: var(--silver-color); }
+.border-color-silver { border-color: var(--silver-color); }
+
+.light-silver { color: var(--light-silver-color); }
+.bg-light-silver { background-color: var(--light-silver-color); }
+.hover-bg-light-silver:hover { background-color: var(--light-silver-color); }
+.fill-light-silver { fill: var(--light-silver-color); }
+.border-color-light-silver { border-color: var(--light-silver-color); }
+
+.near-white { color: var(--near-white-color); }
+.bg-near-white { background-color: var(--near-white-color); }
+.hover-bg-near-white:hover { background-color: var(--near-white-color); }
+.fill-near-white { fill: var(--near-white-color); }
+.border-color-near-white { border-color: var(--near-white-color); }
+
+.near-black { color: var(--near-black-color); }
+.bg-near-black { background-color: var(--near-black-color); }
+.hover-bg-near-black:hover { background-color: var(--near-black-color); }
+.fill-near-black { fill: var(--near-black-color); }
+.border-color-near-black { border-color: var(--near-black-color); }
+
+.fill-black-50 { fill: rgba(0,0,0,.5); }
+.fill-orange { fill: var(--orange-color); }
+.fill-blue { fill: var(--blue-color); }
+
+.bg-checkerboard {
+  background-position: 0px 0px, 10px 10px;
+  background-size: 20px 20px;
+  background-image:
+  linear-gradient(45deg, var(--checkerboard-color) 25%, transparent 25%, transparent 75%, var(--checkerboard-color) 75%, var(--checkerboard-color) 100%),
+  linear-gradient(45deg, var(--checkerboard-color) 25%, white 25%, white 75%, var(--checkerboard-color) 75%, var(--checkerboard-color) 100%);
+}
+
+.black-95 { color: rgba(0,0,0,.95); }
+.black-90 { color: rgba(0,0,0,.9); }
+.black-80 { color: rgba(0,0,0,.8); }
+.black-70 { color: rgba(0,0,0,.7); }
+.black-60 { color: rgba(0,0,0,.6); }
+.black-50 { color: rgba(0,0,0,.5); }
+.black-40 { color: rgba(0,0,0,.4); }
+.black-30 { color: rgba(0,0,0,.3); }
+.black-20 { color: rgba(0,0,0,.2); }
+.black-10 { color: rgba(0,0,0,.1); }
+.black-05 { color: rgba(0,0,0,.05); }
+
+.bg-black-95 { background-color: rgba(0,0,0,.95); }
+.bg-black-90 { background-color: rgba(0,0,0,.9); }
+.bg-black-80 { background-color: rgba(0,0,0,.8); }
+.bg-black-70 { background-color: rgba(0,0,0,.7); }
+.bg-black-60 { background-color: rgba(0,0,0,.6); }
+.bg-black-50 { background-color: rgba(0,0,0,.5); }
+.bg-black-40 { background-color: rgba(0,0,0,.4); }
+.bg-black-30 { background-color: rgba(0,0,0,.3); }
+.bg-black-20 { background-color: rgba(0,0,0,.2); }
+.bg-black-10 { background-color: rgba(0,0,0,.1); }
+.bg-black-05 { background-color: rgba(0,0,0,.05); }
+
+.hover-bg-black-95:hover { background-color: rgba(0,0,0,.95); }
+.hover-bg-black-90:hover { background-color: rgba(0,0,0,.9); }
+.hover-bg-black-80:hover { background-color: rgba(0,0,0,.8); }
+.hover-bg-black-70:hover { background-color: rgba(0,0,0,.7); }
+.hover-bg-black-60:hover { background-color: rgba(0,0,0,.6); }
+.hover-bg-black-50:hover { background-color: rgba(0,0,0,.5); }
+.hover-bg-black-40:hover { background-color: rgba(0,0,0,.4); }
+.hover-bg-black-30:hover { background-color: rgba(0,0,0,.3); }
+.hover-bg-black-20:hover { background-color: rgba(0,0,0,.2); }
+.hover-bg-black-10:hover { background-color: rgba(0,0,0,.1); }
+.hover-bg-black-05:hover { background-color: rgba(0,0,0,.05); }
+
+.border-color-black-95 { border-color: rgba(0,0,0,.95); }
+.border-color-black-90 { border-color: rgba(0,0,0,.9); }
+.border-color-black-80 { border-color: rgba(0,0,0,.8); }
+.border-color-black-70 { border-color: rgba(0,0,0,.7); }
+.border-color-black-60 { border-color: rgba(0,0,0,.6); }
+.border-color-black-50 { border-color: rgba(0,0,0,.5); }
+.border-color-black-40 { border-color: rgba(0,0,0,.4); }
+.border-color-black-30 { border-color: rgba(0,0,0,.3); }
+.border-color-black-20 { border-color: rgba(0,0,0,.2); }
+.border-color-black-10 { border-color: rgba(0,0,0,.1); }
+.border-color-black-05 { border-color: rgba(0,0,0,.05); }
+
+.white-95 { color: rgba(255,255,255,.95); }
+.white-90 { color: rgba(255,255,255,.9); }
+.white-80 { color: rgba(255,255,255,.8); }
+.white-70 { color: rgba(255,255,255,.7); }
+.white-60 { color: rgba(255,255,255,.6); }
+.white-50 { color: rgba(255,255,255,.5); }
+.white-40 { color: rgba(255,255,255,.4); }
+.white-30 { color: rgba(255,255,255,.3); }
+.white-20 { color: rgba(255,255,255,.2); }
+.white-10 { color: rgba(255,255,255,.1); }
+.white-05 { color: rgba(255,255,255,.05); }
+
+.bg-white-95 { background-color: rgba(255,255,255,.95); }
+.bg-white-90 { background-color: rgba(255,255,255,.9); }
+.bg-white-80 { background-color: rgba(255,255,255,.8); }
+.bg-white-70 { background-color: rgba(255,255,255,.7); }
+.bg-white-60 { background-color: rgba(255,255,255,.6); }
+.bg-white-50 { background-color: rgba(255,255,255,.5); }
+.bg-white-40 { background-color: rgba(255,255,255,.4); }
+.bg-white-30 { background-color: rgba(255,255,255,.3); }
+.bg-white-20 { background-color: rgba(255,255,255,.2); }
+.bg-white-10 { background-color: rgba(255,255,255,.1); }
+.bg-white-05 { background-color: rgba(255,255,255,.05); }
+
+.text-near-black {
+  color: var(--near-black-color);
+}
+
+.dim {
+  opacity: 1;
+  transition: opacity .15s ease-in;
+}
+.dim:hover,
+.dim:focus {
+  opacity: .5;
+  transition: opacity .15s ease-in;
+}
+
+.opacity-05 { opacity: 0.5; }
+.opacity-10 { opacity: 0.1; }
+.opacity-20 { opacity: 0.2; }
+.opacity-30 { opacity: 0.3; }
+.opacity-40 { opacity: 0.4; }
+.opacity-60 { opacity: 0.6; }
+.opacity-70 { opacity: 0.7; }
+.opacity-80 { opacity: 0.8; }
+.opacity-90 { opacity: 0.9; }
+
+.z-max {
+  z-index: 2147483647;
+}
