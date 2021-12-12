@@ -1,5 +1,6 @@
 (ns app.sci
   (:require ["@codemirror/view" :as view]
+            [app.error :refer [error-handler]]
             [app.max-or-throw :refer [max-or-throw]]
             [applied-science.js-interop :as j]
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
@@ -29,7 +30,7 @@
 (defn eval-string [source]
   (try (sci/eval-string* context source)
        (catch :default e
-         (str e))))
+         (with-out-str (error-handler source e)))))
 
 (j/defn eval-at-cursor [on-result ^:js {:keys [state]}]
   (some->> (eval-region/cursor-node-string state)
