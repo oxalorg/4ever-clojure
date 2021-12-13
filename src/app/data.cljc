@@ -2025,8 +2025,8 @@ e.g. 15 would be [1 5] in base 10,
                   "(= [0] (__ 0 11))"
                   "(= [1 0 0 1] (__ 9 2))"
                   "(= [1 0] (let [n (rand-int 100000)] (__ n n)))"
-                  "(= [16 18 5 24 15 1] (__ Integer/MAX_VALUE 42))"] 
-    :difficulty "medium" 
+                  "(= [22 6 10 5 0 19 6 9 6 31] (__ js/Number.MAX_SAFE_INTEGER 42))"]
+    :difficulty "medium"
     :tags ["math"]}
 
    {:id         140
