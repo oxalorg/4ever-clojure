@@ -10,7 +10,8 @@
             [nextjournal.clojure-mode :as cm-clj]
             [nextjournal.clojure-mode.live-grammar :as live-grammar]
             [nextjournal.clojure-mode.test-utils :as test-utils]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [clojure.browser.dom :as dom]))
 
 (def theme
   (.theme
@@ -49,9 +50,10 @@
 
 (defn editor
   [source !view {:keys [eval?]}]
-  (r/with-let
+  (let
     [last-result (when eval? (r/atom (sci/eval-string source)))
      mount! (fn [el]
+              (when @!view (j/call @!view :destroy))
               (when el
                 (reset! !view (new EditorView
                                    (j/obj :state (test-utils/make-state
@@ -63,10 +65,11 @@
                                                               :on-result
                                                               (fn [result]
                                                                 (reset! last-result result))})]))
-                                                  source)
-
-
-                                          :parent el)))))]
+                                                  source))))
+                (let [dom (. @!view -dom)]
+                  (if-let [first-child (aget (.-childNodes el) 0)]
+                    (dom/replace-node first-child dom)
+                    (dom/append el dom)))))]
     [:div
      [:div
       {:ref mount!,
@@ -79,5 +82,4 @@
                  :font-family "var(--code-font)"}}
         [:span "user=> "]
         (try (prn-str @last-result)
-             (catch :default e (str e)))])]
-    (finally (j/call @!view :destroy))))
+             (catch :default e (str e)))])]))
