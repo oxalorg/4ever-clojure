@@ -75,7 +75,7 @@
          (when (:restricted problem)
            [restricted-alert problem])
          [:p "Write code which will fill in the above blanks:"]
-         [editor/editor @code !editor-view {:eval? true}]
+         [editor/editor code !editor-view {:eval? true}]
          [:button {:on-click on-run
                    :style {:margin-top "1rem"}}
           "Run"]

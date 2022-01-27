@@ -35,19 +35,19 @@
 (j/defn eval-at-cursor [on-result ^:js {:keys [state]}]
   (some->> (eval-region/cursor-node-string state)
            (eval-string)
-           (on-result))
+           (on-result (.-doc state)))
   true)
 
 (j/defn eval-top-level [on-result ^:js {:keys [state]}]
   (some->> (eval-region/top-level-string state)
            (eval-string)
-           (on-result))
+           (on-result (.-doc state)))
   true)
 
 (j/defn eval-cell [on-result ^:js {:keys [state]}]
-  (-> (str "(do " (.-doc state) " )")
+  (some->> (str "(do " (.-doc state) " )")
       (eval-string)
-      (on-result))
+      (on-result (.-doc state)))
   true)
 
 (defn keymap* [modifier]

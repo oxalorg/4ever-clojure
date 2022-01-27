@@ -50,9 +50,9 @@
 
 (defn editor
   [source !view {:keys [eval?]}]
-  (let
-      [last-result (when eval? (r/atom (sci/eval-string source)))
-       mount! (fn [el]
+  (r/with-let [last-result (when eval? (r/atom (sci/eval-string @source)))]
+    (let
+      [mount! (fn [el]
                 (when @!view (j/call @!view :destroy))
                 (when el
                   (reset! !view (new EditorView
@@ -63,9 +63,10 @@
                                                              [(sci/extension
                                                                {:modifier "Alt",
                                                                 :on-result
-                                                                (fn [result]
+                                                                (fn [code result]
+                                                                  (reset! source (str code))
                                                                   (reset! last-result result))})]))
-                                                    source))))
+                                                    @source))))
                   (let [dom (. @!view -dom)]
                     (if-let [first-child (aget (.-childNodes el) 0)]
                       (dom/replace-node first-child dom)
@@ -84,4 +85,4 @@
         [:pre {:style {:margin-bottom "0.5rem"}}
          [:span "user=> "]
          (try [:code @last-result]
-              (catch :default e (str e)))]])]))
+              (catch :default e (str e)))]])])))
