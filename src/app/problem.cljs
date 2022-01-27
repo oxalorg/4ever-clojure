@@ -44,8 +44,8 @@
        [:p {:style results-style}
         [:span test]
         (if passed?
-          [:span {:style {:color "green"}} "✓ complete"]
-          [:span {:style {:color "red" }} "! uh-oh"])])]))
+          [:span {:style {:color "green"}} "🟢 pass"]
+          [:span {:style {:color "red" }} "🔴 uh-oh"])])]))
 
 (defn restricted-alert [problem]
   [:p
