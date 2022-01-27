@@ -25,7 +25,7 @@
      "Built with ❤ by "
      [:a {:href "https://twitter.com/oxalorg"} "@oxalorg"]
      " and "
-     [:a {:href "https://twitter.com/lambdaisland"} "@lambdaisland"]]]
+     [:a {:href "https://twitter.com/borkdude"} "@borkdude"]]]
    notification])
 
 (defn main []
