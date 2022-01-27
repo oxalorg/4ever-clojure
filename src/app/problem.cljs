@@ -109,6 +109,7 @@
            [:li
             [:pre
              [:code test]]]))]
+       ^{:key (str "problem-" id)}
        [user-code-section id problem solution]
        [:hr]
        [:p
