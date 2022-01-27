@@ -78,6 +78,7 @@
        [:div
         {:style {:white-space "pre-wrap"
                  :margin-top "0.5rem"
+                 :font-size "0.9em"
                  :color "#333333"
                  :font-family "var(--code-font)"}}
         [:pre {:style {:margin-bottom "0.5rem"}}
