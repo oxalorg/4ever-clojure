@@ -53,45 +53,46 @@
    (str/join "," (:restricted problem))])
 
 (defn user-code-section [id problem solution]
-  (let [code (r/atom (if-let [code (:code solution "")]
-                       ;; can sometimes be {:code nil}
-                       code ""))]
-    (r/with-let [!editor-view (r/atom nil)
-                 get-editor-value #(some-> @!editor-view .-state .-doc str)
-                 results (r/atom '())
-                 modal-is-open (r/atom false)
-                 modal-on-close #(reset! modal-is-open false)
-                 error-stacktrace (r/atom "")]
-      (let [next-prob (some #(when (> (:id %) id) %) data/problems)
-            on-run (fn []
-                     (try
+  (r/with-let [code (r/atom (if-let [code (:code solution "")]
+                              ;; can sometimes be {:code nil}
+                              code ""))
+               !editor-view (r/atom nil)
+               get-editor-value #(some-> @!editor-view .-state .-doc str)
+               results (r/atom '())
+               modal-is-open (r/atom false)
+               modal-on-close #(reset! modal-is-open false)
+               error-stacktrace (r/atom nil)]
+    (let [next-prob (some #(when (> (:id %) id) %) data/problems)
+          on-run (fn []
+                   (try
                        (let [attempts (check-solution problem (get-editor-value))]
                          (when attempts
                            (reset! results attempts)
                            (reset! modal-is-open true)))
                        (catch ExceptionInfo e
                          (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
+      [:div
+       (when (:restricted problem)
+         [restricted-alert problem])
+       [:p "Write code which will fill in the above blanks:"]
+       [editor/editor @code !editor-view {:eval? true}]
+       [:button {:on-click on-run
+                 :style {:margin-top "1rem"}}
+        "Run"]
+       [:p {:style {:margin-top "1rem"}}
+        [:small
+         "Alt+Enter will eval the local form in the editor box above. There are
+          lots of nifty such features and keybindings. More docs coming soon! (Try
+          playing with alt + arrows / ctrl + enter) in the meanwhile."]]
+       [modal/box {:is-open modal-is-open
+                   :on-close modal-on-close}
+        [modal-results-section @results (:tests problem) (:id problem)]
         [:div
-         (when (:restricted problem)
-           [restricted-alert problem])
-         [:p "Write code which will fill in the above blanks:"]
-         [editor/editor @code !editor-view {:eval? true}]
-         [:button {:on-click on-run
-                   :style {:margin-top "1rem"}}
-          "Run"]
-         [:p {:style {:margin-top "1rem"}}
-          [:small
-           "Alt+Enter will eval the local form in the editor box above. There are
-            lots of nifty such features and keybindings. More docs coming soon! (Try
-            playing with alt + arrows / ctrl + enter) in the meanwhile."]]
-         [modal/box {:is-open modal-is-open
-                     :on-close modal-on-close}
-          [modal-results-section @results (:tests problem) (:id problem)]
-          [:div
-           [:p {:on-click #(reset! modal-is-open false)}
-            "Next problem "
-            [:a {:href (state/href :problem/item {:id (:id next-prob)})}
-             (str "#" (:id next-prob) " " (:title next-prob))]]]]]))))
+         [:p {:on-click #(reset! modal-is-open false)}
+          "Next problem "
+          [:a {:href (state/href :problem/item {:id (:id next-prob)})}
+           (str "#" (:id next-prob) " " (:title next-prob))]]]
+      ]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]
