@@ -80,7 +80,6 @@
                  :margin-top "0.5rem"
                  :color "#333333"
                  :font-family "var(--code-font)"}}
-        [:h5 "REPL"]
         [:pre {:style {:margin-bottom "0.5rem"}}
          [:span "user=> "]
          (try [:code @last-result]
