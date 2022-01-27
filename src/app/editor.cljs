@@ -83,5 +83,5 @@
                  :font-family "var(--code-font)"}}
         [:pre {:style {:margin-bottom "0.5rem"}}
          [:span "user=> "]
-         (try [:code @last-result]
+         (try [:code {:dangerouslySetInnerHTML {:__html @last-result}}]
               (catch :default e (str e)))]])]))
