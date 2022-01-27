@@ -51,25 +51,25 @@
 (defn editor
   [source !view {:keys [eval?]}]
   (let
-    [last-result (when eval? (r/atom (sci/eval-string source)))
-     mount! (fn [el]
-              (when @!view (j/call @!view :destroy))
-              (when el
-                (reset! !view (new EditorView
-                                   (j/obj :state (test-utils/make-state
-                                                  (cond-> #js [extensions]
-                                                    eval? (.concat
-                                                           #js
-                                                           [(sci/extension
-                                                             {:modifier "Alt",
-                                                              :on-result
-                                                              (fn [result]
-                                                                (reset! last-result result))})]))
-                                                  source))))
-                (let [dom (. @!view -dom)]
-                  (if-let [first-child (aget (.-childNodes el) 0)]
-                    (dom/replace-node first-child dom)
-                    (dom/append el dom)))))]
+      [last-result (when eval? (r/atom (sci/eval-string source)))
+       mount! (fn [el]
+                (when @!view (j/call @!view :destroy))
+                (when el
+                  (reset! !view (new EditorView
+                                     (j/obj :state (test-utils/make-state
+                                                    (cond-> #js [extensions]
+                                                      eval? (.concat
+                                                             #js
+                                                             [(sci/extension
+                                                               {:modifier "Alt",
+                                                                :on-result
+                                                                (fn [result]
+                                                                  (reset! last-result result))})]))
+                                                    source))))
+                  (let [dom (. @!view -dom)]
+                    (if-let [first-child (aget (.-childNodes el) 0)]
+                      (dom/replace-node first-child dom)
+                      (dom/append el dom)))))]
     [:div
      [:div
       {:ref mount!,
@@ -78,8 +78,10 @@
        [:div
         {:style {:white-space "pre-wrap"
                  :margin-top "0.5rem"
-                 :color "#c3c3c3"
+                 :color "#333333"
                  :font-family "var(--code-font)"}}
-        [:span "user=> "]
-        (try (prn-str @last-result)
-             (catch :default e (str e)))])]))
+        [:h5 "REPL"]
+        [:pre {:style {:margin-bottom "0.5rem"}}
+         [:span "user=> "]
+         (try [:code @last-result]
+              (catch :default e (str e)))]])]))
