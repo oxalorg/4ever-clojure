@@ -10,8 +10,7 @@
             [nextjournal.clojure-mode :as cm-clj]
             [nextjournal.clojure-mode.live-grammar :as live-grammar]
             [nextjournal.clojure-mode.test-utils :as test-utils]
-            [reagent.core :as r]
-            [clojure.browser.dom :as dom]))
+            [reagent.core :as r]))
 
 (def theme
   (.theme
@@ -50,26 +49,24 @@
 
 (defn editor
   [source !view {:keys [eval?]}]
-  (let
-      [last-result (when eval? (r/atom (sci/eval-string source)))
-       mount! (fn [el]
-                (when @!view (j/call @!view :destroy))
-                (when el
-                  (reset! !view (new EditorView
-                                     (j/obj :state (test-utils/make-state
-                                                    (cond-> #js [extensions]
-                                                      eval? (.concat
-                                                             #js
-                                                             [(sci/extension
-                                                               {:modifier "Alt",
-                                                                :on-result
-                                                                (fn [result]
-                                                                  (reset! last-result result))})]))
-                                                    source))))
-                  (let [dom (. @!view -dom)]
-                    (if-let [first-child (aget (.-childNodes el) 0)]
-                      (dom/replace-node first-child dom)
-                      (dom/append el dom)))))]
+  (r/with-let
+    [last-result (when eval? (r/atom (sci/eval-string source)))
+     mount! (fn [el]
+              (when el
+                (reset! !view (new EditorView
+                                   (j/obj :state (test-utils/make-state
+                                                  (cond-> #js [extensions]
+                                                    eval? (.concat
+                                                           #js
+                                                           [(sci/extension
+                                                             {:modifier "Alt",
+                                                              :on-result
+                                                              (fn [result]
+                                                                (reset! last-result result))})]))
+                                                  source)
+
+
+                                          :parent el)))))]
     [:div
      [:div
       {:ref mount!,
@@ -84,4 +81,5 @@
         [:pre {:style {:margin-bottom "0.5rem"}}
          [:span "user=> "]
          (try [:code (str @last-result)]
-              (catch :default e (str e)))]])]))
+              (catch :default e (str e)))]])]
+    (finally (j/call @!view :destroy))))
