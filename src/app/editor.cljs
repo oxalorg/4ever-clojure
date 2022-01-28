@@ -9,7 +9,6 @@
             [applied-science.js-interop :as j]
             [nextjournal.clojure-mode :as cm-clj]
             [nextjournal.clojure-mode.live-grammar :as live-grammar]
-            [nextjournal.clojure-mode.test-utils :as test-utils]
             [reagent.core :as r]))
 
 (def theme
@@ -47,6 +46,13 @@
    (.of view/keymap historyKeymap)])
 
 
+(defn- make-state [extensions doc]
+  (.create EditorState
+            #js{:doc doc
+                :extensions (cond-> #js[(.. EditorState -allowMultipleSelections (of true))]
+                              extensions
+                              (j/push! extensions))}))
+
 (defn editor
   [source !view {:keys [eval?]}]
   (r/with-let
@@ -54,7 +60,7 @@
      mount! (fn [el]
               (when el
                 (reset! !view (new EditorView
-                                   (j/obj :state (test-utils/make-state
+                                   (j/obj :state (make-state
                                                   (cond-> #js [extensions]
                                                     eval? (.concat
                                                            #js
