@@ -1,6 +1,6 @@
 {:tasks
  {npm:install {:doc "Installs NPM deps"
                :task (shell "npm install")}
-  watch {:doc "watches build with shadow-cljs"
-         :depends [npm:install]
-         :task (shell "npx shadow-cljs watch my-build")}}}
+  dev {:doc "watches build with shadow-cljs"
+       :depends [npm:install]
+       :task (shell "npx shadow-cljs watch my-build")}}}
