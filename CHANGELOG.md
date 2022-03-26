@@ -5,7 +5,7 @@
 ## 0.6.0
 
 - sci upgrade, removed hack for evaluating "infinite" sequences
-- add more info to problem page
+- add title and difficulty info to problem page
 - dedupe solutions to only show 1 of each
 - enable gzip
 
