@@ -74,7 +74,7 @@
     :command (fn [_]
                (sh "npx" "shadow-cljs" "release" ":my-build")
                (with-module-hashed-index
-                 (sh "rsync" "-a" "public/" "ark:/srv/ox/4clojure" "-v")))}
+                 (sh "rsync" "-a" "public/" "ark2:/srv/ox/4clojure" "-v")))}
    "help"
    {:description "show this help information"
     :command (fn [_] (print-help "bin/dev" commands))}))

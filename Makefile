@@ -1,4 +1,4 @@
 .PHONY=deploy
 
-deploy: 
+deploy:
 	bin/dev deploy
