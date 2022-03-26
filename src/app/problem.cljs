@@ -1,18 +1,20 @@
 (ns app.problem
   (:require [app.data :as data]
             [app.editor :as editor]
+            [app.modal :as modal]
             [app.sci :refer [eval-string]]
             [app.state :as state :refer [db]]
             [clojure.string :as str]
-            [goog.object :as gobj]
-            [reagent.core :as r]
-            [app.modal :as modal]))
+            [reagent.core :as r]))
 
 (def user-data (r/cursor db [:solutions]))
 
 (defn get-problem [id]
   (first
    (filter #(= (:id %) id) data/problems)))
+
+(defn next-problem [id]
+  (some #(when (> (:id %) id) %) data/problems))
 
 (defn check-solution [problem user-solution]
   (let [replaced (mapv #(str/replace % "__" user-solution) (:tests problem))
@@ -62,7 +64,7 @@
                modal-is-open (r/atom false)
                modal-on-close #(reset! modal-is-open false)
                error-stacktrace (r/atom nil)]
-    (let [next-prob (some #(when (> (:id %) id) %) data/problems)
+    (let [next-prob (next-problem id)
           on-run (fn []
                    (try
                        (let [attempts (check-solution problem (get-editor-value))]
@@ -98,13 +100,15 @@
   (fn [{:keys [path-params] :as _props}]
     (let [id (js/parseInt (:id path-params))
           solution (get @user-data id)
-          problem (get-problem id)]
+          {:keys [title tests description difficulty] :as problem} (get-problem id)]
       [:div
-       [:h3 "Problem " id]
-       [:p (:description problem)]
+       [:h3 "Problem " id ", " title]
+       [:div {:style {:margin-top "0.5rem" :margin-bottom "2rem"}}
+        [:b "Difficulty: "] difficulty]
+       [:p description]
        [:ul
         (doall
-         (for [[i test] (map-indexed vector (:tests problem))]
+         (for [[i test] (map-indexed vector tests)]
            ^{:key i}
            [:li
             [:pre
