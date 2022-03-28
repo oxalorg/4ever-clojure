@@ -2,13 +2,16 @@
   (:require ["@codemirror/view" :as view]
             [app.error :refer [error-handler]]
             [applied-science.js-interop :as j]
+            [goog.string]
+            [goog.string.format]
             [nextjournal.clojure-mode.extensions.eval-region :as eval-region]
             [sci.core :as sci]
             [sci.impl.evaluator]))
 
 (defonce context
   (sci/init {:classes {'js goog/global
-                       :allow :all}}))
+                       :allow :all}
+             :namespaces {'clojure.core {'format goog.string/format}}}))
 
 (defn eval-string [source]
   (try (sci/eval-string* context source)
