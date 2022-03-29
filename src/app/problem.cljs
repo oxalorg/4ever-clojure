@@ -67,17 +67,22 @@
     (let [next-prob (next-problem id)
           on-run (fn []
                    (try
-                       (let [attempts (check-solution problem (get-editor-value))]
-                         (when attempts
-                           (reset! results attempts)
-                           (reset! modal-is-open true)))
-                       (catch ExceptionInfo e
-                         (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
+                     (let [editor-value (get-editor-value)
+                           _ (reset! code editor-value)
+                           attempts (check-solution problem editor-value)]
+                       (when attempts
+                         (reset! results attempts)
+                         (reset! modal-is-open true)))
+                     (catch ExceptionInfo e
+                       (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
       [:div
        (when (:restricted problem)
          [restricted-alert problem])
        [:p "Write code which will fill in the above blanks:"]
-       [editor/editor @code !editor-view {:eval? true}]
+
+       ;; Force resetting editor state when input source code changed
+       ;; e.g., when manually trigger run
+       ^{:key @code} [editor/editor @code !editor-view {:eval? true}]
        [:button {:on-click on-run
                  :style {:margin-top "1rem"}}
         "Run"]
@@ -94,7 +99,7 @@
           "Next problem "
           [:a {:href (state/href :problem/item {:id (:id next-prob)})}
            (str "#" (:id next-prob) " " (:title next-prob))]]]
-      ]])))
+        ]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]

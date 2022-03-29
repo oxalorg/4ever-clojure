@@ -86,7 +86,9 @@
                  :font-family "var(--code-font)"}}
         [:pre {:style {:margin-bottom "0.5rem"}}
          [:span "user=> "]
-         (try [:code (binding [*print-length* 20]
-                       (pr-str @last-result))]
+         (try [:code {:style {:white-space "pre-wrap"
+                              :word-break "break-all"}}
+               (binding [*print-length* 20]
+                       (if (string? @last-result) @last-result (pr-str @last-result)))]
               (catch :default e (str e)))]])]
     (finally (j/call @!view :destroy))))
