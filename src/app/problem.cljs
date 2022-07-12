@@ -111,7 +111,7 @@
        [:div {:style {:margin-top "0.5rem" :margin-bottom "2rem"}}
         [:b "Difficulty: "] difficulty]
        [:p description]
-       [:ul
+       [:ul {:style {:list-style "none" :padding 0}}
         (doall
          (for [[i test] (map-indexed vector tests)]
            ^{:key i}
