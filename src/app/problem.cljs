@@ -33,12 +33,18 @@
                     :font-family "monospace"
                     :justify-content "space-between"})
 
+(defn test-attempts [results tests]
+  (map vector tests results))
+
+(defn test-attempts-passed? [results tests]
+  (every? true? (map #(second %) (test-attempts results tests))))
+
 (defn modal-results-section [results tests id]
-  (let [test-attempts (map vector tests results)]
+  (let [attempts (test-attempts results tests)]
     [:div
      [:h4 (str "Results " "#" id )]
      [:hr ]
-     (for [[i [test passed?]] (map-indexed vector test-attempts)]
+     (for [[i [test passed?]] (map-indexed vector attempts)]
        ^{:key i}
        [:p {:style results-style}
         [:span test]
@@ -95,11 +101,10 @@
                    :on-close modal-on-close}
         [modal-results-section @results (:tests problem) (:id problem)]
         [:div
-         [:p {:on-click #(reset! modal-is-open false)}
-          "Next problem "
-          [:a {:href (state/href :problem/item {:id (:id next-prob)})}
-           (str "#" (:id next-prob) " " (:title next-prob))]]]
-        ]])))
+          (if (test-attempts-passed? @results (:tests problem)) 
+             [:button {:on-click #(set! (.-location js/window) (state/href :problem/item {:id (:id next-prob)}))}  
+              (str "Next problem " "#" (:id next-prob) " " (:title next-prob))]
+             [:button {:on-click #(reset! modal-is-open false)} "Return to problem"])]]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]
