@@ -7,5 +7,5 @@
        :task (do
                (fs/copy "public/index.template.html" "public/index.html" {:replace-existing true})
                (shell "npx shadow-cljs watch my-build"))}
-  bukd {:doc "builds production build"
-        :task (shell "bb bin/dev build")}}}
+  build {:doc "builds production build"
+         :task (shell "bb bin/dev build")}}}
