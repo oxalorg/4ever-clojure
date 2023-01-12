@@ -1,6 +1,7 @@
 (ns app.core
   (:require [app.routes :as routes]
-            [reagent.dom :as rdom]))
+            [reagent.dom :as rdom]
+            [reitit.frontend.easy :as rfe]))
 
 (def notification
   [:div {:style {:background-color "#D6D0FD"
@@ -18,7 +19,8 @@
    [:h1 "4ever-clojure"]
    [:p
     [:small
-     [:a {:href "/"} "home"]
+     [:a {:href (rfe/href :home)
+          :data-reitit-handle-click false} "home"]
      " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
      " | "
