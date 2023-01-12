@@ -6,3 +6,4 @@
 /.store/
 /.clj-kondo/.cache
 .cache
+/public/index.html

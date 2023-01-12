@@ -8,4 +8,5 @@
                (fs/copy "public/index.template.html" "public/index.html" {:replace-existing true})
                (shell "npx shadow-cljs watch my-build"))}
   build {:doc "builds production build"
+         :depends [npm:install]
          :task (shell "bb bin/dev build")}}}
