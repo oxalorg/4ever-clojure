@@ -4,7 +4,8 @@
  :builds
  {:my-build {:target :browser
              :output-dir "public/js"
-             :asset-path "/js"
+             ;; commented out for borkdude.github.io/4ever-clojure
+             ;; :asset-path "/js"
              :module-hash-names true
              :modules {:my-main {:entries [app.core]}}
              :build-hooks [(shadow.cljs.build-report/hook)]}}}
