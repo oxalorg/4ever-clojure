@@ -5,3 +5,4 @@
 /.nrepl-port
 /.store/
 /.clj-kondo/.cache
+.cache
