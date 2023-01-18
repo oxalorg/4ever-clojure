@@ -44,37 +44,34 @@
          (get "help")
          :command) nil)))
 
-;; Commands
-(defmacro with-module-hashed-index
-  "Evaluates body with index file changed to reflect hashed module paths.
-  Reverts index back to original after body execution is completed.
+(defn hash-index []
+  (let [original-index (slurp "./public/index.template.html")
+        hashed-file-name (some->> "./public/js/manifest.edn"
+                                  slurp
+                                  read-string
+                                  (filter #(= (:module-id %) :my-main))
+                                  first
+                                  :output-name)
+        hashed-index (str/replace original-index
+                                  #"my-main.js"
+                                  hashed-file-name)]
+    (spit "./public/index.html" hashed-index)))
 
-  Currently only supports single hardcoded module. Only needed for prod build.
-  Make sure :module-hash-names is true in shadow-cljs.edn"
-  [& body]
-  `(let [original-index (slurp "./public/index.html")
-         hashed-file-name (some->> "./public/js/manifest.edn"
-                                   slurp
-                                   read-string
-                                   (filter #(= (:module-id %) :my-main))
-                                   first
-                                   :output-name)
-         hashed-index (str/replace original-index
-                                   #"my-main.js"
-                                   hashed-file-name)]
-     (spit "./public/index.html" hashed-index)
-     (do ~@body)
-     (sh "rm" (str "./public/js/" hashed-file-name))
-     (spit "./public/index.html" original-index)))
+(defn build [_]
+  (sh "npx" "shadow-cljs" "release" ":my-build")
+  (hash-index))
 
 (def commands
   (sorted-map
+   "build"
+   {:description "shadow production build & deploy"
+    :command (fn [_]
+               (build {}))}
    "deploy"
    {:description "shadow production build & deploy"
     :command (fn [_]
-               (sh "npx" "shadow-cljs" "release" ":my-build")
-               (with-module-hashed-index
-                 (sh "rsync" "-a" "public/" "ark2:/srv/ox/4clojure" "-v")))}
+               (build {})
+               (sh "rsync" "-a" "public/" "ark2:/srv/ox/4clojure" "-v"))}
    "help"
    {:description "show this help information"
     :command (fn [_] (print-help "bin/dev" commands))}))
