@@ -2,9 +2,10 @@
   (:require ["@codemirror/fold" :as fold]
             ["@codemirror/gutter" :refer [lineNumbers]]
             ["@codemirror/highlight" :as highlight]
-            ["@codemirror/history" :refer [history historyKeymap]]
+            ["@codemirror/history" :refer [history #_historyKeymap]]
             ["@codemirror/state" :refer [EditorState]]
             ["@codemirror/view" :as view :refer [EditorView]]
+            [app.editor-ex :as editor-ex]
             [app.sci :as sci]
             [applied-science.js-interop :as j]
             [nextjournal.clojure-mode :as cm-clj]
@@ -30,28 +31,27 @@
 
 (defonce extensions
   #js
-  [theme
-   (history)
-   highlight/defaultHighlightStyle
-   (view/drawSelection)
-   (lineNumbers)
-   (fold/foldGutter)
-   (.. EditorState -allowMultipleSelections (of true))
-   (if false
+   [theme
+    (history)
+    highlight/defaultHighlightStyle
+    (view/drawSelection)
+    (lineNumbers)
+    (fold/foldGutter)
+    (.. EditorState -allowMultipleSelections (of true))
+    (if false
      ;; use live-reloading grammar
-     #js [(cm-clj/syntax live-grammar/parser)
-          (.slice cm-clj/default-extensions 1)]
-     cm-clj/default-extensions)
-   (.of view/keymap cm-clj/complete-keymap)
-   (.of view/keymap historyKeymap)])
-
+      #js [(cm-clj/syntax live-grammar/parser)
+           (.slice editor-ex/clojure-mode-extensions 1)]
+      editor-ex/clojure-mode-extensions)
+    #_(.of view/keymap cm-clj/complete-keymap)
+    #_(.of view/keymap historyKeymap)])
 
 (defn- make-state [extensions doc]
   (.create EditorState
-            #js{:doc doc
-                :extensions (cond-> #js[(.. EditorState -allowMultipleSelections (of true))]
-                              extensions
-                              (j/push! extensions))}))
+           #js{:doc doc
+               :extensions (cond-> #js[(.. EditorState -allowMultipleSelections (of true))]
+                             extensions
+                             (j/push! extensions))}))
 
 (defn editor
   [source !view {:keys [eval?]}]
@@ -64,13 +64,12 @@
                                                   (cond-> #js [extensions]
                                                     eval? (.concat
                                                            #js
-                                                           [(sci/extension
-                                                             {:modifier "Alt",
-                                                              :on-result
-                                                              (fn [result]
-                                                                (reset! last-result result))})]))
+                                                            [(sci/extension
+                                                              {:modifier "Alt",
+                                                               :on-result
+                                                               (fn [result]
+                                                                 (reset! last-result result))})]))
                                                   source)
-
 
                                           :parent el)))))]
     [:div
@@ -89,6 +88,6 @@
          (try [:code {:style {:white-space "pre-wrap"
                               :word-break "break-all"}}
                (binding [*print-length* 20]
-                       (if (string? @last-result) @last-result (pr-str @last-result)))]
+                 (if (string? @last-result) @last-result (pr-str @last-result)))]
               (catch :default e (str e)))]])]
     (finally (j/call @!view :destroy))))
