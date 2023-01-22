@@ -33,18 +33,37 @@
                     :font-family "monospace"
                     :justify-content "space-between"})
 
-(defn modal-results-section [results tests id]
-  (let [test-attempts (map vector tests results)]
-    [:div
-     [:h4 (str "Results " "#" id )]
-     [:hr ]
+(defn render-result-item [test maybe-result]
+  [:li
+   [:pre
+    [:code {:style results-style} test (when maybe-result maybe-result)]]])
+
+(defn result-list [items]
+  [:ul {:style {:list-style "none" :padding 0}}
+   items])
+
+(defn test-list-section [tests]
+  [result-list
+   (doall
+    (for [[i test] (map-indexed vector tests)]
+      ^{:key i}
+      [render-result-item test]))])
+
+(defn result-info-item [color text]
+  [:span {:style {:color color
+                  :align-self "center"}}
+   text])
+
+(defn test-results-section [results tests]
+  [result-list
+   (let [test-attempts (map vector tests results)]
      (for [[i [test passed?]] (map-indexed vector test-attempts)]
        ^{:key i}
-       [:p {:style results-style}
-        [:span test]
+       [render-result-item
+        test
         (if passed?
-          [:span {:style {:color "green"}} "🟢 pass"]
-          [:span {:style {:color "red" }} "🔴 uh-oh"])])]))
+          [result-info-item "green" "🟢 pass"]
+          [result-info-item "red"   "🔴 uh-oh"])]))])
 
 (defn restricted-alert [problem]
   [:p
@@ -63,7 +82,9 @@
                results (r/atom '())
                modal-is-open (r/atom false)
                modal-on-close #(reset! modal-is-open false)
-               error-stacktrace (r/atom nil)]
+               solution-attempted (r/atom false)
+               error-stacktrace (r/atom nil)
+               tests (:tests problem)]
     (let [next-prob (next-problem id)
           on-run (fn []
                    (try
@@ -72,10 +93,15 @@
                            attempts (check-solution problem editor-value)]
                        (when attempts
                          (reset! results attempts)
-                         (reset! modal-is-open true)))
+                         (reset! solution-attempted true)
+                         (when (every? true? attempts)
+                           (reset! modal-is-open true))))
                      (catch ExceptionInfo e
                        (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
       [:div
+       (if @solution-attempted
+         [test-results-section @results tests]
+         [test-list-section tests])
        (when (:restricted problem)
          [restricted-alert problem])
        [:p "Write code which will fill in the above blanks:"]
@@ -93,31 +119,23 @@
           playing with alt + arrows / ctrl + enter) in the meanwhile."]]
        [modal/box {:is-open modal-is-open
                    :on-close modal-on-close}
-        [modal-results-section @results (:tests problem) (:id problem)]
+        [:h4 (str "Congratulations on solving problem " "#" id "!")]
         [:div
          [:p {:on-click #(reset! modal-is-open false)}
           "Next problem "
           [:a {:href (state/href :problem/item {:id (:id next-prob)})}
-           (str "#" (:id next-prob) " " (:title next-prob))]]]
-        ]])))
+           (str "#" (:id next-prob) " " (:title next-prob))]]]]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]
     (let [id (js/parseInt (:id path-params))
           solution (get @user-data id)
-          {:keys [title tests description difficulty] :as problem} (get-problem id)]
+          {:keys [title description difficulty] :as problem} (get-problem id)]
       [:div
        [:h3 "Problem " id ", " title]
        [:div {:style {:margin-top "0.5rem" :margin-bottom "2rem"}}
         [:b "Difficulty: "] difficulty]
        [:p description]
-       [:ul {:style {:list-style "none" :padding 0}}
-        (doall
-         (for [[i test] (map-indexed vector tests)]
-           ^{:key i}
-           [:li
-            [:pre
-             [:code test]]]))]
        ^{:key (str "problem-" id)}
        [user-code-section id problem solution]
        [:hr]
@@ -125,5 +143,4 @@
         "Want to see how others have solved this? "
         [:a {:href (state/href :solution/list {:id id})}
          "View problem #" id " solutions archive"]
-        " No cheating please! :)"]
-       ])))
+        " No cheating please! :)"]])))
