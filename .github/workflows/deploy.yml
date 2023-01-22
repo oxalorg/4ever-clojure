@@ -4,7 +4,7 @@ on:
     branches:
       - main
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 jobs:
@@ -35,15 +35,9 @@ jobs:
         run: |
           bb build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          # Upload entire repository
-          path: 'public'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: public
