@@ -36,7 +36,9 @@
 (defn render-result-item [test maybe-result]
   [:li
    [:pre
-    [:code {:style results-style} test (when maybe-result maybe-result)]]])
+    [:code {:style results-style}
+     [:span {:style {:overflow-x "hidden"}} test]
+     (when maybe-result maybe-result)]]])
 
 (defn result-list [items]
   [:ul {:style {:list-style "none" :padding 0}}
