@@ -45,6 +45,14 @@ mode.
 
 shadow hosts the dev server at http://localhost:8000
 
+## Test your own version live
+
+You can deploy your own instance via GitHub Actions:
+
+1. Go to Settings -> Pages
+1. Choose Build and deployment -> Github Actions
+1. Upload your repository or trigger the build
+
 ## Todos
 
 - [x] Ship a crude version
