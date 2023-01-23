@@ -37,7 +37,7 @@ jobs:
 
         # To be able to deploy your own version you have to choose the
         # "GitHub Actions" option in your project settings.
-        # It may not work "deploy from a branch" is chosen.
+        # It may not work if "deploy from a branch" is chosen.
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
