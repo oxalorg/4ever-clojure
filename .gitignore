@@ -7,3 +7,5 @@
 /.clj-kondo/.cache
 .cache
 /public/index.html
+.clj-kondo/babashka/
+.clj-kondo/rewrite-clj/

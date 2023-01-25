@@ -8,6 +8,7 @@
             [reagent.core :as r]))
 
 (def user-data (r/cursor db [:solutions]))
+(def editor-settings (r/cursor db [:editor-settings]))
 
 (defn get-problem [id]
   (first
@@ -27,6 +28,9 @@
     (if (or (> failed 0) (> passed 0))
       results
       (throw (ex-info "Evaluation error" {:stacktrace (first results)})))))
+
+(defn save-editor-settings! [extension-mode]
+  (reset! editor-settings {:extension-mode extension-mode}))
 
 (def results-style {:width "100%"
                     :display "flex"
@@ -80,10 +84,13 @@
                               ;; can sometimes be {:code nil}
                               code ""))
                !editor-view (r/atom nil)
+               editor-extension-mode (r/atom (:extension-mode @editor-settings))
                get-editor-value #(some-> @!editor-view .-state .-doc str)
                results (r/atom '())
-               modal-is-open (r/atom false)
-               modal-on-close #(reset! modal-is-open false)
+               success-modal-is-open (r/atom false)
+               success-modal-on-close #(reset! success-modal-is-open false)
+               settings-modal-is-open (r/atom false)
+               settings-modal-on-close #(reset! settings-modal-is-open false)
                solution-attempted (r/atom false)
                error-stacktrace (r/atom nil)
                tests (:tests problem)]
@@ -97,7 +104,7 @@
                          (reset! results attempts)
                          (reset! solution-attempted true)
                          (when (every? true? attempts)
-                           (reset! modal-is-open true))))
+                           (reset! success-modal-is-open true))))
                      (catch ExceptionInfo e
                        (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
       [:div
@@ -110,20 +117,47 @@
 
        ;; Force resetting editor state when input source code changed
        ;; e.g., when manually trigger run
-       ^{:key @code} [editor/editor @code !editor-view {:eval? true}]
-       [:button {:on-click on-run
-                 :style {:margin-top "1rem"}}
-        "Run"]
+       ^{:key [@code @editor-extension-mode]}
+       [editor/editor @code !editor-view {:eval? true
+                                          :extension-mode @editor-extension-mode}]
+       [:div {:style {:display "flex"
+                      :justify-content "space-between"}}
+        [:button {:on-click on-run
+                  :style {:margin-top "1rem"}}
+         "Run"]
+        [:button {:on-click #(reset! settings-modal-is-open true)
+                  :style {:margin-top "1rem"}}
+         "Settings"]]
+       [modal/box {:is-open settings-modal-is-open
+                   :on-close settings-modal-on-close}
+        ^{:key "header"}
+        [:h4 "Change editor settings"]
+        ^{:key "settings"}
+        [:div
+         [:div {:style {:display "flex"}}
+          [:input {:type "checkbox"
+                   :id "checkbox-editor-is-extended-mode"
+                   :checked (= :extended @editor-extension-mode)
+                   :on-change (fn [e]
+                                (let [new-mode (if (-> e
+                                                       .-target
+                                                       .-checked)
+                                                 :extended
+                                                 :basic)]
+                                  (reset! code (get-editor-value))
+                                  (save-editor-settings! new-mode)
+                                  (reset! editor-extension-mode new-mode)))}]
+          [:label {:for "checkbox-editor-is-extended-mode"} "Use extended input mode (can be somewhat intrusive)"]]]]
        [:p {:style {:margin-top "1rem"}}
         [:small
          "Alt+Enter will eval the local form in the editor box above. There are
           lots of nifty such features and keybindings. More docs coming soon! (Try
           playing with alt + arrows / ctrl + enter) in the meanwhile."]]
-       [modal/box {:is-open modal-is-open
-                   :on-close modal-on-close}
+       [modal/box {:is-open success-modal-is-open
+                   :on-close success-modal-on-close}
         [:h4 (str "Congratulations on solving problem " "#" id "!")]
         [:div
-         [:p {:on-click #(reset! modal-is-open false)}
+         [:p {:on-click #(reset! success-modal-is-open false)}
           "Next problem "
           [:a {:href (state/href :problem/item {:id (:id next-prob)})}
            (str "#" (:id next-prob) " " (:title next-prob))]]]]])))

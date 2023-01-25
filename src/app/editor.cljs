@@ -29,22 +29,31 @@
            ".cm-cursor" {:visibility "hidden"},
            "&.cm-focused .cm-cursor" {:visibility "visible"}})))
 
-(defonce extensions
-  #js
-   [theme
-    (history)
-    highlight/defaultHighlightStyle
-    (view/drawSelection)
-    (lineNumbers)
-    (fold/foldGutter)
-    (.. EditorState -allowMultipleSelections (of true))
-    (if false
-     ;; use live-reloading grammar
-      #js [(cm-clj/syntax live-grammar/parser)
-           (.slice editor-ex/clojure-mode-extensions 1)]
-      editor-ex/clojure-mode-extensions)
-    #_(.of view/keymap cm-clj/complete-keymap)
-    #_(.of view/keymap historyKeymap)])
+(def mk-extensions
+  (memoize
+   (fn [extension-mode]
+     #js
+      [theme
+       (history)
+       highlight/defaultHighlightStyle
+       (view/drawSelection)
+       (lineNumbers)
+       (fold/foldGutter)
+       (.. EditorState -allowMultipleSelections (of true))
+       (let [editor-extensions-to-load (case extension-mode
+                                         :basic editor-ex/clojure-mode-extensions-basic
+                                         :extended cm-clj/default-extensions
+                                         (do (js/console.info (str "Unknown Editor extensions mode: "
+                                                                   (name extension-mode)
+                                                                   ". Defaulting to basic mode."))
+                                             editor-ex/clojure-mode-extensions-basic))]
+         (if false
+           ;; use live-reloading grammar
+           #js [(cm-clj/syntax live-grammar/parser)
+                (.slice editor-extensions-to-load 1)]
+           editor-extensions-to-load))
+       #_(.of view/keymap cm-clj/complete-keymap)
+       #_(.of view/keymap historyKeymap)])))
 
 (defn- make-state [extensions doc]
   (.create EditorState
@@ -54,14 +63,14 @@
                              (j/push! extensions))}))
 
 (defn editor
-  [source !view {:keys [eval?]}]
+  [source !view {:keys [eval? extension-mode]}]
   (r/with-let
     [last-result (when eval? (r/atom (sci/eval-string source)))
      mount! (fn [el]
               (when el
                 (reset! !view (new EditorView
                                    (j/obj :state (make-state
-                                                  (cond-> #js [extensions]
+                                                  (cond-> #js [(mk-extensions (or extension-mode :basic))]
                                                     eval? (.concat
                                                            #js
                                                             [(sci/extension
