@@ -1,14 +1,15 @@
 (ns app.problem
-  (:require [app.data :as data]
-            [app.editor :as editor]
-            [app.modal :as modal]
-            [app.sci :refer [eval-string]]
-            [app.state :as state :refer [db]]
-            [clojure.string :as str]
-            [reagent.core :as r]))
+  (:require
+   [app.data :as data]
+   [app.editor :as editor]
+   [app.editor-settings :as editor-settings]
+   [app.modal :as modal]
+   [app.sci :refer [eval-string]]
+   [app.state :as state :refer [db]]
+   [clojure.string :as str]
+   [reagent.core :as r]))
 
 (def user-data (r/cursor db [:solutions]))
-(def editor-settings (r/cursor db [:editor-settings]))
 
 (defn get-problem [id]
   (first
@@ -28,9 +29,6 @@
     (if (or (> failed 0) (> passed 0))
       results
       (throw (ex-info "Evaluation error" {:stacktrace (first results)})))))
-
-(defn save-editor-settings! [extension-mode]
-  (reset! editor-settings {:extension-mode extension-mode}))
 
 (def results-style {:width "100%"
                     :display "flex"
@@ -84,7 +82,9 @@
                               ;; can sometimes be {:code nil}
                               code ""))
                !editor-view (r/atom nil)
-               editor-extension-mode (r/atom (:extension-mode @editor-settings))
+               editor-extension-mode (r/atom
+                                      (:extension-mode
+                                       @editor-settings/editor-settings))
                get-editor-value #(some-> @!editor-view .-state .-doc str)
                results (r/atom '())
                success-modal-is-open (r/atom false)
@@ -118,8 +118,9 @@
        ;; Force resetting editor state when input source code changed
        ;; e.g., when manually trigger run
        ^{:key [@code @editor-extension-mode]}
-       [editor/editor @code !editor-view {:eval? true
-                                          :extension-mode @editor-extension-mode}]
+       [editor/editor @code !editor-view
+        {:eval? true
+         :extension-mode @editor-extension-mode}]
        [:div {:style {:display "flex"
                       :justify-content "space-between"}}
         [:button {:on-click on-run
@@ -130,24 +131,10 @@
          "Settings"]]
        [modal/box {:is-open settings-modal-is-open
                    :on-close settings-modal-on-close}
-        ^{:key "header"}
-        [:h4 "Change editor settings"]
-        ^{:key "settings"}
-        [:div
-         [:div {:style {:display "flex"}}
-          [:input {:type "checkbox"
-                   :id "checkbox-editor-is-extended-mode"
-                   :checked (= :extended @editor-extension-mode)
-                   :on-change (fn [e]
-                                (let [new-mode (if (-> e
-                                                       .-target
-                                                       .-checked)
-                                                 :extended
-                                                 :basic)]
-                                  (reset! code (get-editor-value))
-                                  (save-editor-settings! new-mode)
-                                  (reset! editor-extension-mode new-mode)))}]
-          [:label {:for "checkbox-editor-is-extended-mode"} "Use extended input mode (can be somewhat intrusive)"]]]]
+        [editor-settings/modal
+         (fn [{:keys [extension-mode] :as _editor-settings}]
+           (reset! code (get-editor-value))
+           (reset! editor-extension-mode extension-mode))]]
        [:p {:style {:margin-top "1rem"}}
         [:small
          "Alt+Enter will eval the local form in the editor box above. There are
