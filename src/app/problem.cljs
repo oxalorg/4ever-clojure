@@ -30,16 +30,16 @@
       results
       (throw (ex-info "Evaluation error" {:stacktrace (first results)})))))
 
-(def results-style {:width "100%"
-                    :display "flex"
-                    :font-family "monospace"
-                    :justify-content "space-between"})
+(def results-style {:display "flex"
+                    :flex-direction "row"
+                    :flex-wrap "wrap"
+                    :font-family "monospace"})
 
-(defn render-result-item [test maybe-result]
+(defn render-result [test-src maybe-result]
   [:li
    [:pre
     [:code {:style results-style}
-     [:span {:style {:overflow-x "hidden"}} test]
+     [:span test-src]
      (when maybe-result maybe-result)]]])
 
 (defn result-list [items]
@@ -49,25 +49,29 @@
 (defn test-list-section [tests]
   [result-list
    (doall
-    (for [[i test] (map-indexed vector tests)]
+    (for [[i test-src] (map-indexed vector tests)]
       ^{:key i}
-      [render-result-item test]))])
+      [render-result test-src]))])
 
 (defn result-info-item [color text]
   [:span {:style {:color color
-                  :align-self "center"}}
+                  :align-self "center"
+                  :width "4.5em"
+                  :margin-left "auto"}}
    text])
 
 (defn test-results-section [results tests]
   [result-list
    (let [test-attempts (map vector tests results)]
-     (for [[i [test passed?]] (map-indexed vector test-attempts)]
+     (for [[i [test-src passed?]] (map-indexed vector test-attempts)]
        ^{:key i}
-       [render-result-item
-        test
+       [render-result
+        test-src
         (if passed?
           [result-info-item "green" "🟢 pass"]
           [result-info-item "red"   "🔴 uh-oh"])]))])
+
+(def run-button-style {:margin-top "1rem"})
 
 (defn restricted-alert [problem]
   [:p
@@ -124,10 +128,10 @@
        [:div {:style {:display "flex"
                       :justify-content "space-between"}}
         [:button {:on-click on-run
-                  :style {:margin-top "1rem"}}
+                  :style run-button-style}
          "Run"]
         [:button {:on-click #(reset! settings-modal-is-open true)
-                  :style {:margin-top "1rem"}}
+                  :style run-button-style}
          "Settings"]]
        [modal/box {:is-open settings-modal-is-open
                    :on-close settings-modal-on-close}
