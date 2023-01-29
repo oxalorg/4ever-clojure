@@ -3,7 +3,7 @@
             [reagent.core :as r]))
 
 (defn solutions-url [id]
-  (str "/api/solutions/" id ".json"))
+  (str "https://solutions.4clojure.oxal.org/deduped/solutions/" id ".json"))
 
 (def solutions (r/atom []))
 
