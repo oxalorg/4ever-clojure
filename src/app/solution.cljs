@@ -1,6 +1,6 @@
 (ns app.solution
-  (:require [lambdaisland.fetch :as fetch]
-            [reagent.core :as r]))
+  (:require 
+   [reagent.core :as r]))
 
 (defn solutions-url [id]
   (str "https://solutions.4clojure.oxal.org/deduped/solutions/" id ".json"))
@@ -10,10 +10,12 @@
 (defn state-init! [id]
   (reset! solutions [])
   (let [id (js/parseInt id)
-        data (fetch/get (solutions-url id))]
+        data (js/fetch (solutions-url id))]
     (-> data
         (.then (fn [resp]
-                 (reset! solutions (take 1000 (js->clj (:body resp)))))))))
+                 (.json resp)))
+        (.then (fn [data]
+                 (reset! solutions (take 1000 (js->clj data))))))))
 
 (defn list-view [{:keys [path-params]}]
   (let [id (js/parseInt (:id path-params))]
