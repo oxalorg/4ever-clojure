@@ -9,10 +9,10 @@
                  :top 0
                  :left 0
                  :width "100%"
-                 :text-align "center"
-                 :padding "0.5rem 0"}}
-   [:small
-    "Solutions archive browsable from each problem page 🎉 Huge thanks to Alan!!"]])
+                 :text-align "center"}}
+   [:div {:style {:padding "0.5rem"}}
+    [:small
+     "Solutions archive browsable from each problem page 🎉 Huge thanks to Alan!!"]]])
 
 (defn header []
   [:header
