@@ -62,25 +62,33 @@
                              extensions
                              (j/push! extensions))}))
 
+(defn to-readable-output [result]
+  (or (::sci/error-str result)
+      (::sci/result result)))
+
 (defn editor
-  [source !view {:keys [eval? extension-mode]}]
+  [source !view outside-error-str {:keys [eval? extension-mode]}]
   (r/with-let
-    [last-result (when eval? (r/atom (sci/eval-string source)))
+    [last-result (when eval? (r/atom (->> source
+                                          sci/eval-string
+                                          to-readable-output)))
      mount! (fn [el]
               (when el
-                (reset! !view (new EditorView
-                                   (j/obj :state (make-state
-                                                  (cond-> #js [(mk-extensions (or extension-mode :basic))]
-                                                    eval? (.concat
-                                                           #js
-                                                            [(sci/extension
-                                                              {:modifier "Alt",
-                                                               :on-result
-                                                               (fn [result]
-                                                                 (reset! last-result result))})]))
-                                                  source)
+                (reset! !view
+                        (new EditorView
+                             (j/obj :state (make-state
+                                            (cond-> #js [(mk-extensions (or extension-mode :basic))]
+                                              eval? (.concat
+                                                     #js
+                                                      [(sci/extension
+                                                        {:modifier "Alt",
+                                                         :on-result
+                                                         (fn [result]
+                                                           (reset! last-result
+                                                                   (to-readable-output result)))})]))
+                                            source)
 
-                                          :parent el)))))]
+                                    :parent el)))))]
     [:div
      [:div
       {:ref mount!,
@@ -97,6 +105,10 @@
          (try [:code {:style {:white-space "pre-wrap"
                               :word-break "break-all"}}
                (binding [*print-length* 20]
-                 (if (string? @last-result) @last-result (pr-str @last-result)))]
+                 (cond
+                   outside-error-str outside-error-str
+                   (string? @last-result) @last-result
+                   :else (pr-str @last-result)))]
+
               (catch :default e (str e)))]])]
     (finally (j/call @!view :destroy))))

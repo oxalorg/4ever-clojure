@@ -4,7 +4,7 @@
    [app.editor :as editor]
    [app.editor-settings :as editor-settings]
    [app.modal :as modal]
-   [app.sci :refer [eval-string]]
+   [app.sci :refer [eval-string] :as evaluator]
    [app.state :as state :refer [db]]
    [clojure.string :as str]
    [reagent.core :as r]))
@@ -18,17 +18,26 @@
 (defn next-problem [id]
   (some #(when (> (:id %) id) %) data/problems))
 
+(defn passed? [attempt]
+  (true? (::evaluator/result attempt)))
+
+(defn result-type [attempt]
+  (cond
+    (::evaluator/error-str attempt) ::error
+    (passed? attempt) ::passed
+    :else ::failed))
+
 (defn check-solution [problem user-solution]
   (let [replaced (mapv #(str/replace % "__" user-solution) (:tests problem))
         results  (map eval-string replaced)
-        passed   (count (filter true? results))
-        failed   (count (filter false? results))]
+        grouped-results (group-by result-type results)]
     (swap! user-data assoc (:id problem) {:code   user-solution
-                                          :passed passed
-                                          :failed failed})
-    (if (or (> failed 0) (> passed 0))
-      results
-      (throw (ex-info "Evaluation error" {:stacktrace (first results)})))))
+                                          :passed (count (grouped-results ::passed))
+                                          :failed (+ (count (grouped-results ::failed))
+                                                     (count (grouped-results ::error)))})
+    (if-let [[first-error] (seq (grouped-results ::error))]
+      {:error first-error}
+      {:results results})))
 
 (def results-style {:display "flex"
                     :flex-direction "row"
@@ -60,14 +69,14 @@
                   :margin-left "auto"}}
    text])
 
-(defn test-results-section [results tests]
+(defn test-results-section [attempts tests]
   [result-list
-   (let [test-attempts (map vector tests results)]
-     (for [[i [test-src passed?]] (map-indexed vector test-attempts)]
+   (let [test-attempts (map vector tests attempts)]
+     (for [[i [test-src attempt]] (map-indexed vector test-attempts)]
        ^{:key i}
        [render-result
         test-src
-        (if passed?
+        (if (passed? attempt)
           [result-info-item "green" "🟢 pass"]
           [result-info-item "red"   "🔴 uh-oh"])]))])
 
@@ -90,30 +99,30 @@
                                       (:extension-mode
                                        @editor-settings/editor-settings))
                get-editor-value #(some-> @!editor-view .-state .-doc str)
-               results (r/atom '())
+               attempts-atom (r/atom '())
+               attempt-error-str (r/atom nil)
                success-modal-is-open (r/atom false)
                success-modal-on-close #(reset! success-modal-is-open false)
                settings-modal-is-open (r/atom false)
                settings-modal-on-close #(reset! settings-modal-is-open false)
                solution-attempted (r/atom false)
-               error-stacktrace (r/atom nil)
                tests (:tests problem)]
     (let [next-prob (next-problem id)
           on-run (fn []
-                   (try
-                     (let [editor-value (get-editor-value)
-                           _ (reset! code editor-value)
-                           attempts (check-solution problem editor-value)]
-                       (when attempts
-                         (reset! results attempts)
+                   (let [editor-value (get-editor-value)
+                         _ (reset! code editor-value)
+                         {:keys [results error]} (check-solution problem editor-value)]
+                     (if error
+                       (reset! attempt-error-str (::evaluator/error-str error))
+                       (do
+                         (reset! attempt-error-str nil)
+                         (reset! attempts-atom results)
                          (reset! solution-attempted true)
-                         (when (every? true? attempts)
-                           (reset! success-modal-is-open true))))
-                     (catch ExceptionInfo e
-                       (reset! error-stacktrace (-> e ex-data :stacktrace)))))]
+                         (when (every? passed? results)
+                           (reset! success-modal-is-open true))))))]
       [:div
        (if @solution-attempted
-         [test-results-section @results tests]
+         [test-results-section @attempts-atom tests]
          [test-list-section tests])
        (when (:restricted problem)
          [restricted-alert problem])
@@ -122,7 +131,10 @@
        ;; Force resetting editor state when input source code changed
        ;; e.g., when manually trigger run
        ^{:key [@code @editor-extension-mode]}
-       [editor/editor @code !editor-view
+       [editor/editor
+        @code
+        !editor-view
+        @attempt-error-str
         {:eval? true
          :extension-mode @editor-extension-mode}]
        [:div {:style {:display "flex"
