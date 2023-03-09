@@ -63,19 +63,19 @@
                              (j/push! extensions))}))
 
 (defn show-error [last-result test-evaluation-error-str]
-  (if-let [result-output (::sci/result last-result)]
+  (if (contains? last-result ::sci/result)
     [:span "user=> "
      (binding [*print-length* 20]
-       (pr-str result-output))
+       (pr-str (::sci/result last-result)))
      (when test-evaluation-error-str
        [:span
         [:br]
         [:br]
-        "test=> "
+        "test=>"
         [:br]
         test-evaluation-error-str])]
     [:span
-     "user=> "
+     "user=>"
      [:br]
      (::sci/error-str last-result)]))
 
