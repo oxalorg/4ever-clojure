@@ -64,15 +64,18 @@
 
 (defn show-error [last-result test-evaluation-error-str]
   (if-let [result-output (::sci/result last-result)]
-    (binding [*print-length* 20]
-      (if test-evaluation-error-str
-        [:span
-         (pr-str result-output)
-         [:br]
-         [:br]
-         test-evaluation-error-str]
-        (pr-str result-output)))
+    [:span "user=> "
+     (binding [*print-length* 20]
+       (pr-str result-output))
+     (when test-evaluation-error-str
+       [:span
+        [:br]
+        [:br]
+        "test=> "
+        [:br]
+        test-evaluation-error-str])]
     [:span
+     "user=> "
      [:br]
      (::sci/error-str last-result)]))
 
@@ -108,7 +111,6 @@
                  :color "#333333"
                  :font-family "var(--code-font)"}}
         [:pre {:style {:margin-bottom "0.5rem"}}
-         [:span "user=> "]
          (try [:code {:style {:white-space "pre-wrap"
                               :word-break "break-all"}}
                [show-error @last-result test-evaluation-error-str]]
