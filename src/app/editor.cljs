@@ -62,16 +62,24 @@
                              extensions
                              (j/push! extensions))}))
 
-(defn to-readable-output [result]
-  (or (::sci/error-str result)
-      (::sci/result result)))
+(defn show-error [last-result test-evaluation-error-str]
+  (if-let [result-output (::sci/result last-result)]
+    (binding [*print-length* 20]
+      (if test-evaluation-error-str
+        [:span
+         (pr-str result-output)
+         [:br]
+         [:br]
+         test-evaluation-error-str]
+        (pr-str result-output)))
+    [:span
+     [:br]
+     (::sci/error-str last-result)]))
 
 (defn editor
-  [source !view outside-error-str {:keys [eval? extension-mode]}]
+  [source !view test-evaluation-error-str {:keys [eval? extension-mode]}]
   (r/with-let
-    [last-result (when eval? (r/atom (->> source
-                                          sci/eval-string
-                                          to-readable-output)))
+    [last-result (when eval? (r/atom (sci/eval-string source)))
      mount! (fn [el]
               (when el
                 (reset! !view
@@ -84,8 +92,7 @@
                                                         {:modifier "Alt",
                                                          :on-result
                                                          (fn [result]
-                                                           (reset! last-result
-                                                                   (to-readable-output result)))})]))
+                                                           (reset! last-result result))})]))
                                             source)
 
                                     :parent el)))))]
@@ -104,11 +111,7 @@
          [:span "user=> "]
          (try [:code {:style {:white-space "pre-wrap"
                               :word-break "break-all"}}
-               (binding [*print-length* 20]
-                 (cond
-                   outside-error-str outside-error-str
-                   (string? @last-result) @last-result
-                   :else (pr-str @last-result)))]
+               [show-error @last-result test-evaluation-error-str]]
 
               (catch :default e (str e)))]])]
     (finally (j/call @!view :destroy))))
