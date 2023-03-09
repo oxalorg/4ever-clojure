@@ -14,9 +14,9 @@
              :namespaces {'clojure.core {'format goog.string/format}}}))
 
 (defn eval-string [source]
-  (try (sci/eval-string* context source)
+  (try {::result (sci/eval-string* context source)}
        (catch :default e
-         (with-out-str (error-handler source e)))))
+         {::error-str (with-out-str (error-handler source e))})))
 
 (j/defn eval-at-cursor [on-result ^:js {:keys [state]}]
   (some->> (eval-region/cursor-node-string state)
