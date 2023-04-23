@@ -39,7 +39,7 @@
   [:<>
    [:h3 "Problems "
     [:small (str "(" (count data/problems) ")")]]
-   (into [:table
+   (into [:table {:class "sortable"}
           [:thead
            [:tr
             [:th {:on-click #(swap! sort-by-solved (fn [] nil))} "No."]
