@@ -8,10 +8,18 @@
             [sci.core :as sci]
             [sci.impl.evaluator]))
 
+(def doc-str-src "
+(in-ns 'user)
+(defmacro doc [sym]
+  `(str \"\n\" (with-out-str (clojure.repl/doc ~sym))))")
+
 (defonce context
-  (sci/init {:classes {'js goog/global
-                       :allow :all}
-             :namespaces {'clojure.core {'format goog.string/format}}}))
+  (doto
+   (sci/init {:classes {'js goog/global
+                        :allow :all}
+              :namespaces {'clojure.core {'format goog.string/format}}})
+   (sci/eval-string* doc-str-src)))
+
 
 (defn eval-string [source]
   (try {::result (sci/eval-string* context source)}
