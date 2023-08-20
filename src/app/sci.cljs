@@ -9,7 +9,6 @@
             [sci.impl.evaluator]))
 
 (def doc-str-src "
-(in-ns 'user)
 (defmacro doc [sym]
   `(str \"\n\" (with-out-str (clojure.repl/doc ~sym))))")
 
