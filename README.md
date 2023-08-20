@@ -6,7 +6,7 @@ https://twitter.com/borkdude/status/1412117420173561861
 Original thread that explains why 4clojure is shutting down:
 https://groups.google.com/g/clojure/c/ZWmDEzvn-Js
 
-> Now that 4clojure is shutting down (thanks for all the years of hosting it!),
+> Now that 4clojure is shutting down (thanks for all the year of hosting it!),
 > perhaps it's time to consider some alternatives. - borkdude
 
 @borkdude suggested this in his tweet:
