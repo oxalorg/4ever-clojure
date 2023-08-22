@@ -108,6 +108,7 @@
                solution-attempted (r/atom false)
                tests (:tests problem)]
     (let [next-prob (next-problem id)
+          next-prob-href (state/href :problem/item {:id (:id next-prob)})
           on-run (fn []
                    (let [editor-value (get-editor-value)
                          _ (reset! code editor-value)
@@ -163,8 +164,9 @@
         [:div
          [:p {:on-click #(reset! success-modal-is-open false)}
           "Next problem "
-          [:a {:href (state/href :problem/item {:id (:id next-prob)})}
-           (str "#" (:id next-prob) " " (:title next-prob))]]]]])))
+          [:a {:href next-prob-href}
+           (str "#" (:id next-prob) " " (:title next-prob))]]]
+        [:button {:on-click #(set! js/window.location next-prob-href)} "Next Problem"]]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]
