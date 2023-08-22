@@ -1,6 +1,7 @@
 (ns app.core
   (:require [app.routes :as routes]
-            [reagent.dom :as rdom]))
+            [reagent.dom :as rdom]
+            [reitit.frontend.easy :as rfe]))
 
 (def notification
   [:div {:style {:background-color "#D6D0FD"
@@ -8,17 +9,18 @@
                  :top 0
                  :left 0
                  :width "100%"
-                 :text-align "center"
-                 :padding "0.5rem"}}
-   [:small
-    "Solutions archive browsable from each problem page 🎉 Huge thanks to Alan!!"]])
+                 :text-align "center"}}
+   [:div {:style {:padding "0.5rem"}}
+    [:small
+     "Solutions archive browsable from each problem page 🎉 Huge thanks to Alan!!"]]])
 
 (defn header []
   [:header
    [:h1 "4ever-clojure"]
    [:p
     [:small
-     [:a {:href "/"} "home"]
+     [:a {:href (rfe/href :home)
+          :data-reitit-handle-click false} "home"]
      " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
      " | "

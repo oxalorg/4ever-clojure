@@ -1,3 +1,4 @@
+.idea
 /public/js/
 /.shadow-cljs/
 /.cpcache
@@ -5,3 +6,7 @@
 /.nrepl-port
 /.store/
 /.clj-kondo/.cache
+.cache
+/public/index.html
+.clj-kondo/babashka/
+.clj-kondo/rewrite-clj/
