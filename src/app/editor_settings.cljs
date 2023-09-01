@@ -17,7 +17,7 @@
      [:h4 "Editor settings"]
      ^{:key "settings"}
      [:div
-      [:div {:style {:display "flex"}}
+      [:div {:style {:display "flex" :align-items "center" :gap 6}}
        [:input {:type "checkbox"
                 :id "checkbox-editor-is-extended-mode"
                 :checked (= :extended @editor-extension-mode)
