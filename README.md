@@ -32,10 +32,17 @@ The archive repo is available at: https://github.com/oxalorg/4clojure-solutions-
 
 ## Develop
 
-This project uses shadow-cljs, so the easiest way to use this would be:
+The easiest way to start up a local server would be to install [Babashka](https://babashka.org/) and run the `dev` script defined in `bb.edn`:
+
+```
+bb dev
+```
+
+Alternatively, you can carry out the instructions of the Babashka script manually:
 
 ```
 npm install # only needed once
+cp "public/index.template.html" "public/index.html"
 npx shadow-cljs watch :my-build
 ```
 
