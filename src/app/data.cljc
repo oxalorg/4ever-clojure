@@ -2577,7 +2577,7 @@ There is an interesting pattern in the numbers!"
     :tests       ["(= [#{\"\"} #{\"()\"} #{\"()()\" \"(())\"}] (map (fn [n] (__ n)) [0 1 2]))"
                   "(= #{\"((()))\" \"()()()\" \"()(())\" \"(())()\" \"(()())\"} (__ 3))"
                   "(= 16796 (count (__ 10)))"
-                  "(= (nth (sort (filter #(.contains ^String % \"(()()()())\") (__ 9))) 6) \"(((()()()())(())))\")"
+                  "(= (nth (sort (filter #(clojure.string/includes? % \"(()()()())\") (__ 9))) 6) \"(((()()()())(())))\")"
                   "(= (nth (sort (__ 12)) 5000) \"(((((()()()()()))))(()))\")"]
     :difficulty "medium" 
     :tags ["math" "combinatorics"]}])
