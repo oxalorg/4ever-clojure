@@ -154,9 +154,9 @@
            (reset! editor-extension-mode extension-mode))]]
        [:p {:style {:margin-top "1rem"}}
         [:small
-         "Alt+Enter will eval the local form in the editor box above. There are
+         "Alt+Enter will eval the local form in the editor box above, and Tab will format the code. There are
           lots of nifty such features and keybindings. More docs coming soon! (Try
-          playing with alt + arrows / ctrl + enter) in the meanwhile.
+          playing with alt + arrows / ctrl + enter / tab) in the meanwhile.
           For documentation try e.g. (doc map)."]]
        [modal/box {:is-open success-modal-is-open
                    :on-close success-modal-on-close}
