@@ -42,8 +42,9 @@ with one or more items \"added\" to the front."
     :difficulty "elementary" 
     :tags []}
 
-   {:id 6 :title "Vectors"
-    :tests ["(= [__] (list :a :b :c) (vec '(:a :b :c)) (vector :a :b :c))"]
+   {:id          6 
+    :title       "Vectors"
+    :tests       ["(= [__] (list :a :b :c) (vec '(:a :b :c)) (vector :a :b :c))"]
     :description "Vectors can be constructed several ways.
 You can compare them with lists." 
     :difficulty "elementary" 
@@ -92,7 +93,7 @@ with one or more key-value pairs \"added\"."
     :tags []}
 
    {:id         12
-    :title       "Sequences"
+    :title       "Sequences: first, second, last"
     :tests       ["(= __ (first '(3 2 1)))"
                   "(= __ (second [2 3 4]))"
                   "(= __ (last (list 1 2 3)))"]
@@ -110,6 +111,7 @@ of a sequence except the first."
     :difficulty "elementary" 
     :tags []}
 
+   ;; Functions and control starts here
    {:id         14
     :title       "Functions"
     :tests       ["(= __ ((fn add-five [x] (+ x 5)) 3))"
