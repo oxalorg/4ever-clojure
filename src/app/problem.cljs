@@ -119,8 +119,8 @@
                          (reset! attempt-error-str nil)
                          (reset! attempts-atom results)
                          (reset! solution-attempted true)
-                         (when (every? passed? results)
-                           (reset! success-modal-is-open true))))))]
+                         #_(when (every? passed? results)
+                             (reset! success-modal-is-open true))))))]
       [:div
        (if @solution-attempted
          [test-results-section @attempts-atom tests]
@@ -158,15 +158,17 @@
           lots of nifty such features and keybindings. More docs coming soon! (Try
           playing with alt + arrows / ctrl + enter / tab) in the meanwhile.
           For documentation try e.g. (doc map)."]]
-       [modal/box {:is-open success-modal-is-open
-                   :on-close success-modal-on-close}
-        [:h4 (str "Congratulations on solving problem " "#" id "!")]
-        [:div
-         [:p {:on-click #(reset! success-modal-is-open false)}
-          "Next problem "
-          [:a {:href next-prob-href}
-           (str "#" (:id next-prob) " " (:title next-prob))]]]
-        [:button {:on-click #(set! js/window.location next-prob-href)} "Next Problem"]]])))
+       (comment
+        ;; I don't like it.
+         [modal/box {:is-open success-modal-is-open
+                     :on-close success-modal-on-close}
+          [:h4 (str "Congratulations on solving problem " "#" id "!")]
+          [:div
+           [:p {:on-click #(reset! success-modal-is-open false)}
+            "Next problem "
+            [:a {:href next-prob-href}
+             (str "#" (:id next-prob) " " (:title next-prob))]]]
+          [:button {:on-click #(set! js/window.location next-prob-href)} "Next Problem"]])])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]
@@ -181,8 +183,15 @@
        ^{:key (str "problem-" id)}
        [user-code-section id problem solution]
        [:hr]
-       [:p
-        "Want to see how others have solved this? "
-        [:a {:href (state/href :solution/list {:id id})}
-         "View problem #" id " solutions archive"]
-        " No cheating please! :)"]])))
+       (let [next-prob (next-problem id)
+             next-prob-href (state/href :problem/item {:id (:id next-prob)})]
+         [:p
+          "Next problem "
+          [:a {:href next-prob-href}
+           (str "#" (:id next-prob) " " (:title next-prob))]])
+       (comment
+         [:p
+          "Want to see how others have solved this? "
+          [:a {:href (state/href :solution/list {:id id})}
+           "View problem #" id " solutions archive"]
+          " No cheating please! :)"])])))
