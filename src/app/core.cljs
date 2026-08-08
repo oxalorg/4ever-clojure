@@ -25,6 +25,8 @@
      " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
      " | "
+     [:a {:on-click #(do (.preventDefault %) (state/import-user-data)) :href "#"} "Import data"]
+     " | "
      [:a {:on-click #(do (.preventDefault %) (state/export-user-data)) :href "#"} "Export data"]
      " | "
      "Built with ❤ by "
