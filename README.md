@@ -69,7 +69,7 @@ You can deploy your own instance via GitHub Actions:
 - [x] scrape problem difficulty (can perhaps also get ranks data?)
 - [ ] better alerts (modals?)
 - [x] show user which problems they have solved
-- [ ] import /export data of the user in a .edn file
+- [x] import /export data of the user in a .edn file
 - [ ] github actions auto deployment
 - [ ] create a new section of problems "community powered questions"
 - [ ] add new community problems directly via github
