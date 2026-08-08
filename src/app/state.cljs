@@ -17,6 +17,24 @@
   {:solutions {}
    :sort-by-solved nil})
 
-(defonce db 
+(defonce db
   (lstore/local-storage (r/atom {})
                         :4ever-clojure))
+
+(defn new-raw-html-el
+  [tag attrs]
+  (js/Object.assign
+   (js/document.createElement tag)
+   (clj->js attrs)))
+
+(defn export-user-data
+  "Get the user's solutions from local storage, and save them to a file."
+  []
+  ;; https://stackoverflow.com/a/79383186/21908056 :)
+  (let [filename "4ever-clojure.edn"
+        content (@db :solutions)
+        file (new js/Blob [content] {"type" "text/plain"})
+        link (js/URL.createObjectURL file)
+        export (new-raw-html-el "a" {:href link :download filename})]
+    (.click export)
+    (. js/URL revokeObjectURL link)))

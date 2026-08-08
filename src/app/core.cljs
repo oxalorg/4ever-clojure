@@ -1,5 +1,6 @@
 (ns app.core
   (:require [app.routes :as routes]
+            [app.state :as state]
             [reagent.dom :as rdom]
             [reitit.frontend.easy :as rfe]))
 
@@ -23,6 +24,8 @@
           :data-reitit-handle-click false} "home"]
      " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
+     " | "
+     [:a {:on-click #(do (.preventDefault %) (state/export-user-data)) :href "#"} "Export data"]
      " | "
      "Built with ❤ by "
      [:a {:href "https://twitter.com/oxalorg"} "@oxalorg"]
