@@ -25,9 +25,9 @@
      " | "
      [:a {:href "https://github.com/oxalorg/4ever-clojure"} "github"]
      " | "
-     [:a {:on-click #(do (.preventDefault %) (state/import-user-data)) :href "#"} "Import data"]
+     [:a {:on-click #(do (.preventDefault %) (state/import-user-data)) :href "#"} "import data"]
      " | "
-     [:a {:on-click #(do (.preventDefault %) (state/export-user-data)) :href "#"} "Export data"]
+     [:a {:on-click #(do (.preventDefault %) (state/export-user-data)) :href "#"} "export data"]
      " | "
      "Built with ❤ by "
      [:a {:href "https://twitter.com/oxalorg"} "@oxalorg"]
