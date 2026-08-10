@@ -1,6 +1,7 @@
 (ns app.state
   (:require [alandipert.storage-atom :as lstore]
             [cljs.reader :refer [read-string]]
+            [cljs.spec.alpha :as spec]
             [reagent.core :as r]
             [reitit.frontend.easy :as rfe]))
 
@@ -22,6 +23,15 @@
   (lstore/local-storage (r/atom {})
                         :4ever-clojure))
 
+;; E.g. {1 {:code "true", :passed 1, :failed 0}, 19 {:code "(comp first reverse)", :passed 3, :failed 0}}
+(spec/def ::code string?)
+(spec/def ::passed number?)
+(spec/def ::failed number?)
+(spec/def ::solution
+  (spec/keys :req-un [::code ::passed ::failed]))
+(spec/def ::solutions
+  (spec/map-of number? ::solution))
+
 (defn new-raw-html-el
   [tag attrs]
   (js/Object.assign
@@ -30,14 +40,7 @@
 
 (defn validate-solution-data
   [data]
-  (when
-   (and
-    (map? data)
-    (every? number? (keys data))
-    (every? string? (:code data))
-    (every? number? (:passed data))
-    (every? number? (:failed data)))
-    data))
+  (when (spec/valid? ::solutions data) data))
 
 (defn import-user-data
   "Import user data from a .edn file"
