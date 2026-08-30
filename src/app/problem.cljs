@@ -101,10 +101,6 @@
                get-editor-value #(some-> @!editor-view .-state .-doc str)
                attempts-atom (r/atom '())
                attempt-error-str (r/atom nil)
-               success-modal-is-open (r/atom false)
-               success-modal-on-close #(reset! success-modal-is-open false)
-               settings-modal-is-open (r/atom false)
-               settings-modal-on-close #(reset! settings-modal-is-open false)
                solution-attempted (r/atom false)
                tests (:tests problem)]
     (let [next-prob (next-problem id)
@@ -120,7 +116,7 @@
                          (reset! attempts-atom results)
                          (reset! solution-attempted true)
                          (when (every? passed? results)
-                           (reset! success-modal-is-open true))))))]
+                           (modal/show "success-dialog"))))))]
       [:div
        (if @solution-attempted
          [test-results-section @attempts-atom tests]
@@ -143,12 +139,12 @@
         [:button {:on-click on-run
                   :style run-button-style}
          "Run"]
-        [:button {:on-click #(reset! settings-modal-is-open true)
+        [:button {:on-click #(modal/show "settings-dialog")
                   :style run-button-style}
          "Settings"]]
-       [modal/box {:is-open settings-modal-is-open
-                   :on-close settings-modal-on-close}
-        [editor-settings/modal
+       [modal/box
+        {:id "settings-dialog" :heading "Editor settings"}
+        [editor-settings/modal-content
          (fn [{:keys [extension-mode] :as _editor-settings}]
            (reset! code (get-editor-value))
            (reset! editor-extension-mode extension-mode))]]
@@ -158,15 +154,19 @@
           lots of nifty such features and keybindings. More docs coming soon! (Try
           playing with alt + arrows / ctrl + enter / tab) in the meanwhile.
           For documentation try e.g. (doc map)."]]
-       [modal/box {:is-open success-modal-is-open
-                   :on-close success-modal-on-close}
-        [:h4 (str "Congratulations on solving problem " "#" id "!")]
+       [modal/box
+        {:id "success-dialog"
+         :heading (str "Congratulations on solving problem " "#" id "!")}
         [:div
-         [:p {:on-click #(reset! success-modal-is-open false)}
+         [:p
           "Next problem "
           [:a {:href next-prob-href}
            (str "#" (:id next-prob) " " (:title next-prob))]]]
-        [:button {:on-click #(set! js/window.location next-prob-href)} "Next Problem"]]])))
+        ;; Yes, this will console.warn() since React expects 'autoFocus' rather
+        ;; than 'autofocus'. However, React's custom implementation of autofocus
+        ;; won't play well with <dialog> elements, since they enter the DOM while
+        ;; still having unfocusable children (at least until shown with JS APIs).
+        [:button {:autofocus "true" :on-click #(set! js/window.location next-prob-href)} "Next Problem"]]])))
 
 (defn view [_]
   (fn [{:keys [path-params] :as _props}]

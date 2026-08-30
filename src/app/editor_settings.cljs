@@ -11,10 +11,9 @@
 (defn save-editor-settings! [new-state]
   (reset! editor-settings new-state))
 
-(defn modal [on-change-settings]
+(defn modal-content [on-change-settings]
   (let [editor-extension-mode (r/atom (:extension-mode @editor-settings))]
     [:div ^{:key "header"}
-     [:h4 "Editor settings"]
      ^{:key "settings"}
      [:div
       [:div {:style {:display "flex" :align-items "center" :gap 6}}
